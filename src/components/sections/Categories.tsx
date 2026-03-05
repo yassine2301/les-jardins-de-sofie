@@ -5,10 +5,10 @@ import { type ShopifyCollection } from '@/lib/shopify';
 import styles from './Categories.module.css';
 
 const fallbackCategories = [
-  { handle: 'compositions', title: 'Compositions', desc: 'Pot + Plante, prêtes à vivre' },
-  { handle: 'plantes', title: 'Plantes', desc: 'Petites, standards & grandes' },
-  { handle: 'pots', title: 'Pots artisanaux', desc: 'Erratum, Saxum, Berceau, Naturalis' },
-  { handle: 'grands-formats', title: 'Grands formats', desc: 'Pièces statement 1m50+' },
+  { handle: 'compositions', title: 'Compositions', desc: 'Pot + Plante, prêtes à vivre', image: '/images/categories/compositions.jpg' },
+  { handle: 'plantes', title: 'Plantes', desc: 'Petites, standards & grandes', image: '/images/categories/plantes.jpg' },
+  { handle: 'pots', title: 'Pots artisanaux', desc: 'Erratum, Saxum, Berceau, Naturalis', image: '/images/categories/pots.jpg' },
+  { handle: 'grands-formats', title: 'Grands formats', desc: 'Pièces statement 1m50+', image: '/images/categories/grands-formats.jpg' },
 ];
 
 interface Props { collections: ShopifyCollection[]; }
@@ -21,7 +21,7 @@ export function Categories({ collections }: Props) {
         desc: c.description || '',
         image: c.image?.url || null,
       }))
-    : fallbackCategories.map(c => ({ ...c, image: null }));
+    : fallbackCategories.map(c => ({ ...c }));
 
   return (
     <section className={styles.section}>

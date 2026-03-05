@@ -7,8 +7,9 @@ import { type ShopifyProduct, type ShopifyCollection } from './shopify';
 
 const img = (url: string) => ({ url, altText: null, width: 600, height: 800 });
 
-// Placeholder image URLs — replace with your real images in /public/images/
-const PH = 'https://placehold.co/600x800/E7D7C1/735751?text=';
+// Real product images from /public/images/
+const PRODUCTS = '/images/products/';
+const CATEGORIES = '/images/categories/';
 
 export const demoProducts: ShopifyProduct[] = [
   // --- COMPOSITIONS ---
@@ -19,7 +20,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['composition', 'nouveau'],
     priceRange: { minVariantPrice: { amount: '1890', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1890', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Erratum+%26+Olivier') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'erratum-olivier.jpg') }] },
     variants: { edges: [{ node: { id: 'v-1', title: 'Default Title', availableForSale: true, price: { amount: '1890', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -29,7 +30,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['composition'],
     priceRange: { minVariantPrice: { amount: '1850', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1850', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Saxum+%26+Lyrata') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'saxum-lyrata.jpg') }] },
     variants: { edges: [{ node: { id: 'v-2', title: 'Default Title', availableForSale: true, price: { amount: '1850', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -39,7 +40,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['composition'],
     priceRange: { minVariantPrice: { amount: '1950', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1950', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Saxum+%26+Cycas') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'saxum-cycas.jpg') }] },
     variants: { edges: [{ node: { id: 'v-3', title: 'Default Title', availableForSale: true, price: { amount: '1950', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -49,7 +50,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['composition'],
     priceRange: { minVariantPrice: { amount: '1430', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1430', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Erratum+%26+Pachira') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'erratum-pachira.jpg') }] },
     variants: { edges: [{ node: { id: 'v-4', title: 'Default Title', availableForSale: true, price: { amount: '1430', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -59,7 +60,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['composition'],
     priceRange: { minVariantPrice: { amount: '1998', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1998', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '2350', currencyCode: 'MAD' }, maxVariantPrice: { amount: '2350', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Berceau+%26+Kentia') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'strelitzia-classique.jpg') }] },
     variants: { edges: [{ node: { id: 'v-5', title: 'Default Title', availableForSale: true, price: { amount: '1998', currencyCode: 'MAD' }, compareAtPrice: { amount: '2350', currencyCode: 'MAD' }, image: null } }] },
   },
   {
@@ -69,7 +70,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['composition'],
     priceRange: { minVariantPrice: { amount: '2450', currencyCode: 'MAD' }, maxVariantPrice: { amount: '2450', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Strelitzia') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'saxum-bonsai.jpg') }] },
     variants: { edges: [{ node: { id: 'v-6', title: 'Default Title', availableForSale: true, price: { amount: '2450', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
 
@@ -81,7 +82,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['plante'],
     priceRange: { minVariantPrice: { amount: '1200', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1200', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Monstera') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'monstera.jpg') }] },
     variants: { edges: [{ node: { id: 'v-10', title: 'Default Title', availableForSale: true, price: { amount: '1200', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -91,7 +92,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['plante'],
     priceRange: { minVariantPrice: { amount: '3100', currencyCode: 'MAD' }, maxVariantPrice: { amount: '3100', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Ficus+Lyrata') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'ficus-lyrata.jpg') }] },
     variants: { edges: [{ node: { id: 'v-11', title: 'Default Title', availableForSale: true, price: { amount: '3100', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -101,7 +102,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['plante'],
     priceRange: { minVariantPrice: { amount: '1460', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1460', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Olivier') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'strelitzia.jpg') }] },
     variants: { edges: [{ node: { id: 'v-12', title: 'Default Title', availableForSale: true, price: { amount: '1460', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -111,7 +112,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['plante'],
     priceRange: { minVariantPrice: { amount: '660', currencyCode: 'MAD' }, maxVariantPrice: { amount: '660', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Strelitzia') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'cycas.jpg') }] },
     variants: { edges: [{ node: { id: 'v-13', title: 'Default Title', availableForSale: true, price: { amount: '660', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -121,7 +122,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['plante'],
     priceRange: { minVariantPrice: { amount: '660', currencyCode: 'MAD' }, maxVariantPrice: { amount: '660', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Bonsai') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'pachira.jpg') }] },
     variants: { edges: [{ node: { id: 'v-14', title: 'Default Title', availableForSale: true, price: { amount: '660', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
 
@@ -133,7 +134,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['pot'],
     priceRange: { minVariantPrice: { amount: '1480', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1480', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Saxum+50') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'saxum-50.jpg') }] },
     variants: { edges: [{ node: { id: 'v-20', title: 'Default Title', availableForSale: true, price: { amount: '1480', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -143,7 +144,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['pot'],
     priceRange: { minVariantPrice: { amount: '1580', currencyCode: 'MAD' }, maxVariantPrice: { amount: '1580', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Erratum+noir+60') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'erratum-noir-60.jpg') }] },
     variants: { edges: [{ node: { id: 'v-21', title: 'Default Title', availableForSale: true, price: { amount: '1580', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -153,7 +154,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['pot'],
     priceRange: { minVariantPrice: { amount: '780', currencyCode: 'MAD' }, maxVariantPrice: { amount: '780', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Erratum+std') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'erratum-standard.jpg') }] },
     variants: { edges: [{ node: { id: 'v-22', title: 'Default Title', availableForSale: true, price: { amount: '780', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
   {
@@ -163,7 +164,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['pot'],
     priceRange: { minVariantPrice: { amount: '704', currencyCode: 'MAD' }, maxVariantPrice: { amount: '704', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '890', currencyCode: 'MAD' }, maxVariantPrice: { amount: '890', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Berceau+noir') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'erratum-duo.jpg') }] },
     variants: { edges: [{ node: { id: 'v-23', title: 'Default Title', availableForSale: true, price: { amount: '704', currencyCode: 'MAD' }, compareAtPrice: { amount: '890', currencyCode: 'MAD' }, image: null } }] },
   },
   {
@@ -173,7 +174,7 @@ export const demoProducts: ShopifyProduct[] = [
     availableForSale: true, tags: ['pot'],
     priceRange: { minVariantPrice: { amount: '400', currencyCode: 'MAD' }, maxVariantPrice: { amount: '400', currencyCode: 'MAD' } },
     compareAtPriceRange: { minVariantPrice: { amount: '0', currencyCode: 'MAD' }, maxVariantPrice: { amount: '0', currencyCode: 'MAD' } },
-    images: { edges: [{ node: img(PH + 'Erratum+petit') }] },
+    images: { edges: [{ node: img(PRODUCTS + 'erratum-gris.jpg') }] },
     variants: { edges: [{ node: { id: 'v-24', title: 'Default Title', availableForSale: true, price: { amount: '400', currencyCode: 'MAD' }, compareAtPrice: null, image: null } }] },
   },
 ];
@@ -182,25 +183,25 @@ export const demoCollections: ShopifyCollection[] = [
   {
     id: 'col-1', handle: 'compositions', title: 'Compositions',
     description: 'Pot + Plante, prêtes à vivre',
-    image: img(PH + 'Compositions'),
+    image: img(CATEGORIES + 'compositions.jpg'),
     products: { edges: demoProducts.filter(p => p.tags.includes('composition')).map(p => ({ node: p })) },
   },
   {
     id: 'col-2', handle: 'plantes', title: 'Plantes',
     description: 'Petites, standards & grandes',
-    image: img(PH + 'Plantes'),
+    image: img(CATEGORIES + 'plantes.jpg'),
     products: { edges: demoProducts.filter(p => p.tags.includes('plante')).map(p => ({ node: p })) },
   },
   {
     id: 'col-3', handle: 'pots', title: 'Pots artisanaux',
     description: 'Erratum, Saxum, Berceau, Naturalis',
-    image: img(PH + 'Pots'),
+    image: img(CATEGORIES + 'pots.jpg'),
     products: { edges: demoProducts.filter(p => p.tags.includes('pot')).map(p => ({ node: p })) },
   },
   {
     id: 'col-4', handle: 'grands-formats', title: 'Grands formats',
     description: 'Pièces statement 1m50+',
-    image: img(PH + 'Grands+formats'),
+    image: img(CATEGORIES + 'grands-formats.jpg'),
     products: { edges: [] },
   },
 ];
