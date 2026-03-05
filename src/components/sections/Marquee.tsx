@@ -1,10 +1,10 @@
 import styles from './Marquee.module.css';
 
 const items = [
-  'Livraison Casablanca & environs',
-  'Pots artisanaux en terre cuite',
+  'Pots artisanaux faits à la main',
   'Compositions sur mesure',
-  "Conseils d'entretien inclus",
+  'Cadeaux corporate',
+  'Conception de jardins',
 ];
 
 export function Marquee() {

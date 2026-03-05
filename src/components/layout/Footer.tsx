@@ -8,11 +8,11 @@ export function Footer() {
       <div className={styles.grid}>
         <div>
           <Link href="/" className={styles.brand}>
-            Les Jardins de <em>Sofie</em>
+            Studio <em>JDS</em>
           </Link>
           <p className={styles.desc}>
-            Compositions uniques de plantes d&apos;intérieur &amp; pots artisanaux en
-            terre cuite. Respirez votre intérieur.
+            Cadeaux corporate, événements, sur-mesure et jardins.
+            Des projets pensés ensemble.
           </p>
           <div className={styles.socials}>
             <a href="https://instagram.com" className={styles.social} aria-label="Instagram" target="_blank" rel="noopener noreferrer">
@@ -39,12 +39,12 @@ export function Footer() {
           </ul>
         </div>
         <div className={styles.col}>
-          <h4>Informations</h4>
+          <h4>Services</h4>
           <ul>
-            <li><Link href="/notre-histoire">Notre histoire</Link></li>
-            <li><Link href="#">Livraison</Link></li>
-            <li><Link href="#">FAQ</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
+            <li><Link href="/services/corporate">Cadeaux corporate</Link></li>
+            <li><Link href="/services/evenements">Location événements</Link></li>
+            <li><Link href="/services/sur-mesure">Créations sur mesure</Link></li>
+            <li><Link href="/services/jardins">Conception de jardins</Link></li>
           </ul>
         </div>
         <div className={styles.col}>
@@ -58,7 +58,7 @@ export function Footer() {
         </div>
       </div>
       <div className={styles.bottom}>
-        <p className={styles.copy}>&copy; 2026 Les Jardins de Sofie. Tous droits réservés.</p>
+        <p className={styles.copy}>&copy; 2026 Studio JDS. Tous droits réservés.</p>
         <div className={styles.payments}>
           <span className={styles.pay}>VISA</span>
           <span className={styles.pay}>MC</span>

@@ -6,15 +6,15 @@ import { CartDrawer } from '@/components/layout/CartDrawer';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Les Jardins de Sofie — Respirez votre intérieur',
+  title: 'Studio JDS — Respirez votre intérieur',
   description:
-    'Compositions uniques de plantes d\'intérieur et pots artisanaux en terre cuite. Chaque pièce est conçue pour sublimer votre espace de vie.',
-  keywords: ['plantes intérieur', 'pots artisanaux', 'terre cuite', 'décoration', 'Casablanca', 'Maroc'],
+    'Cadeaux corporate, événements, sur-mesure et jardins. Des projets pensés ensemble. Plantes d\'intérieur et pots artisanaux en terre cuite.',
+  keywords: ['plantes intérieur', 'pots artisanaux', 'terre cuite', 'décoration', 'cadeaux corporate', 'événements', 'sur-mesure', 'jardins', 'Casablanca', 'Maroc'],
   openGraph: {
-    title: 'Les Jardins de Sofie',
-    description: 'Respirez votre intérieur — Plantes & pots artisanaux',
+    title: 'Studio JDS',
+    description: 'Cadeaux corporate, événements, sur-mesure et jardins. Des projets pensés ensemble.',
     url: 'https://lesjardinsdesofie.com',
-    siteName: 'Les Jardins de Sofie',
+    siteName: 'Studio JDS',
     locale: 'fr_FR',
     type: 'website',
   },

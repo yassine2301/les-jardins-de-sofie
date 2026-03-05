@@ -1,0 +1,170 @@
+.section {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  background: var(--sand-pale);
+}
+
+.card {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 3rem 2.5rem;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 10px 40px rgba(115, 87, 81, 0.06);
+  border: 1px solid rgba(167, 138, 127, 0.08);
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(80, 110, 70, 0.08);
+  color: #5a7a4a;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+}
+
+.heading {
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 1.15;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+
+.heading em {
+  font-style: italic;
+  color: var(--bordeaux);
+}
+
+.desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--chocolate);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field label {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--chocolate);
+}
+
+.req {
+  color: var(--terracotta);
+}
+
+.field input,
+.field select {
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--grey-lt);
+  border-radius: 10px;
+  font-family: var(--ff-b);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--black);
+  background: var(--sand-pale);
+  transition: border-color 0.25s ease;
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--bordeaux);
+}
+
+.field input::placeholder {
+  color: var(--grey);
+}
+
+.submit {
+  width: 100%;
+  padding: 1rem;
+  background: var(--bordeaux);
+  color: var(--sand);
+  font-family: var(--ff-b);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 0.5rem;
+}
+
+.submit:hover {
+  background: var(--choc-dk);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(140, 28, 19, 0.18);
+}
+
+.toggle {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.82rem;
+  color: var(--chocolate);
+}
+
+.toggle button {
+  background: none;
+  border: none;
+  color: var(--bordeaux);
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--ff-b);
+  font-size: 0.82rem;
+  text-decoration: underline;
+}
+
+.toggle button:hover {
+  color: var(--terracotta);
+}
+
+.success {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.success h2 {
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+
+.success p {
+  font-size: 0.9rem;
+  color: var(--chocolate);
+  line-height: 1.6;
+}
+
+.success strong {
+  color: var(--bordeaux);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 2rem 1.5rem;
+  }
+}
