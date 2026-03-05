@@ -1,0 +1,26 @@
+.section { padding: 5rem 0; background: var(--sand-pale); }
+.section + .section { padding-top: 0; }
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 3rem;
+  max-width: 1440px;
+  margin: 0 auto 1.8rem;
+}
+.nav { display: flex; gap: 0.4rem; }
+.navBtn {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--grey-light);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--chocolate); transition: all 0.25s var(--ease);
+  background: var(--white); cursor: pointer;
+}
+.navBtn:hover { border-color: var(--bordeaux); color: var(--bordeaux); background: rgba(140,28,19,0.04); }
+.track {
+  display: flex; gap: 1.1rem; overflow-x: auto;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  padding: 0 3rem 0.5rem; scrollbar-width: none;
+}
+.track::-webkit-scrollbar { display: none; }
+@media (max-width: 768px) { .header, .track { padding-left: 1.5rem; padding-right: 1.5rem; } }

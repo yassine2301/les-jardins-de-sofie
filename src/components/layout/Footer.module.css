@@ -1,0 +1,18 @@
+.footer { background: var(--black); padding: 5rem 3rem 2rem; }
+.grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2.5rem; max-width: 1440px; margin: 0 auto; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(231,215,193,0.06); }
+.brand { font-family: var(--font-display); font-weight: 500; font-size: 1.2rem; color: var(--sand); margin-bottom: 0.8rem; display: block; }
+.brand em { color: var(--taupe); font-style: italic; }
+.desc { font-size: 0.78rem; font-weight: 300; color: rgba(231,215,193,0.3); line-height: 1.7; max-width: 260px; margin-bottom: 1.2rem; }
+.socials { display: flex; gap: 0.6rem; }
+.social { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(231,215,193,0.08); display: flex; align-items: center; justify-content: center; color: rgba(231,215,193,0.35); transition: all 0.25s var(--ease); }
+.social:hover { border-color: var(--terracotta); color: var(--terracotta); background: rgba(191,67,66,0.06); }
+.col h4 { font-weight: 500; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--taupe); margin-bottom: 1.2rem; }
+.col ul { display: flex; flex-direction: column; gap: 0.6rem; }
+.col a { font-size: 0.78rem; font-weight: 300; color: rgba(231,215,193,0.3); transition: color 0.25s var(--ease); }
+.col a:hover { color: var(--sand); }
+.bottom { display: flex; justify-content: space-between; align-items: center; max-width: 1440px; margin: 0 auto; padding-top: 1.5rem; }
+.copy { font-size: 0.68rem; font-weight: 300; color: rgba(231,215,193,0.18); }
+.payments { display: flex; gap: 0.6rem; }
+.pay { width: 34px; height: 22px; border-radius: 3px; background: rgba(231,215,193,0.06); display: flex; align-items: center; justify-content: center; font-size: 0.45rem; font-weight: 500; color: rgba(231,215,193,0.25); }
+@media (max-width: 1024px) { .grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) { .footer { padding: 4rem 1.5rem 2rem; } .grid { grid-template-columns: 1fr; gap: 1.8rem; } .bottom { flex-direction: column; gap: 0.8rem; text-align: center; } }

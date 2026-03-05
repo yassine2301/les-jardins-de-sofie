@@ -1,0 +1,97 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--sand-pale);
+  border-bottom: 1px solid rgba(167, 138, 127, 0.12);
+  transition: box-shadow 0.4s var(--ease);
+}
+.elevated { box-shadow: 0 4px 30px rgba(115, 87, 81, 0.07); }
+.inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+.left { display: flex; align-items: center; gap: 2.5rem; }
+.brand { display: flex; align-items: center; gap: 0.4rem; }
+.logoText {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--black);
+}
+.logoText em { color: var(--bordeaux); font-style: italic; }
+.links { display: flex; gap: 1.8rem; }
+.links a {
+  font-size: 0.76rem;
+  font-weight: 400;
+  color: var(--chocolate);
+  letter-spacing: 0.02em;
+  padding: 0.3rem 0;
+  position: relative;
+  transition: color 0.25s var(--ease);
+}
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--bordeaux);
+  transition: width 0.4s var(--ease);
+}
+.links a:hover { color: var(--bordeaux); }
+.links a:hover::after { width: 100%; }
+.right { display: flex; align-items: center; gap: 1rem; }
+.icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--chocolate);
+  transition: all 0.25s var(--ease);
+  position: relative;
+}
+.icon:hover { background: var(--sand); color: var(--bordeaux); }
+.badge {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 15px;
+  height: 15px;
+  background: var(--terracotta);
+  color: white;
+  font-size: 0.5rem;
+  font-weight: 500;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hamburger { display: none; color: var(--chocolate); }
+
+@media (max-width: 768px) {
+  .inner { padding: 0 1.5rem; }
+  .hamburger { display: flex; }
+  .links {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: var(--sand-pale);
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(167, 138, 127, 0.12);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  .linksOpen { display: flex; }
+}

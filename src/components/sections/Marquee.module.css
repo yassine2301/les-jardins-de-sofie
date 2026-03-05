@@ -1,0 +1,9 @@
+.marquee { background: var(--bordeaux); overflow: hidden; white-space: nowrap; padding: 0.55rem 0; }
+.track { display: inline-flex; animation: mq 35s linear infinite; }
+.item {
+  font-size: 0.68rem; font-weight: 400; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--sand); padding: 0 2.5rem;
+  display: inline-flex; align-items: center; gap: 0.6rem;
+}
+.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--terracotta); flex-shrink: 0; }
+@keyframes mq { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }

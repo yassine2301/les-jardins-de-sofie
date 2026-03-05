@@ -1,0 +1,5 @@
+.section { padding: 3rem 3rem 6rem; max-width: 1440px; margin: 0 auto; }
+.header { text-align: center; margin-bottom: 3rem; padding-top: 1rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+.empty { text-align: center; color: var(--taupe); padding: 4rem 0; }
+@media (max-width: 768px) { .section { padding: 2rem 1.5rem 4rem; } .grid { gap: 1rem; } }
