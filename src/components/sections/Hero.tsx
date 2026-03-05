@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Moon, Check } from "lucide-react";
+import { ArrowRight, Hand, Check } from "lucide-react";
 import styles from "./Hero.module.css";
 
 export function Hero() {
@@ -11,8 +11,7 @@ export function Hero() {
       <div className={styles.content}>
         <div className={styles.text}>
           <div className={styles.tag}>
-            <Moon size={13} strokeWidth={1.5} />
-            Nouvelles compositions
+            Studio JDS
           </div>
           <h1 className={styles.heading}>
             Respirez<br />votre <em>intérieur.</em>
@@ -34,13 +33,11 @@ export function Hero() {
         </div>
         <div className={styles.visual}>
           <div className={styles.imgWrap}>
-            {/* Replace with your hero image: */}
-            {/* <Image src="/images/hero.jpg" alt="Berceau Monstera" fill style={{objectFit:'cover'}} priority /> */}
-            <div className={styles.placeholder} />
+            <Image src="/images/hero-garden.jpg" alt="Jardin avec olivier en pot artisanal" fill style={{objectFit:'cover'}} priority />
           </div>
           <div className={`${styles.floatCard} ${styles.fc1}`}>
             <div className={`${styles.fcIcon} ${styles.fcGreen}`}>
-              <Moon size={16} strokeWidth={1.5} />
+              <Hand size={16} strokeWidth={1.5} />
             </div>
             <div className={styles.fcText}>
               <strong>Terre cuite artisanale</strong>

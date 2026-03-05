@@ -6,12 +6,12 @@ export function BrandStory() {
       <div className={styles.inner}>
         <span className="section-label">Notre philosophie</span>
         <h2 className="section-title">
-          Inspiré d&apos;une nature<br /><em>féconde et généreuse</em>
+          Cadeaux corporate, événements,<br /><em>sur-mesure et jardins.</em>
         </h2>
         <p className="section-desc" style={{ maxWidth: 460, margin: '0 auto 2rem' }}>
-          Les Jardins de Sofie sont nés d&apos;une envie de se sentir bien chez soi,
-          dans un environnement apaisant et bienveillant. Nos compositions allient
-          nature et minimalisme — des pièces conçues pour traverser le temps.
+          Des projets pensés ensemble. Studio JDS conçoit des espaces végétaux
+          uniques — pour les entreprises, les événements et les particuliers.
+          Chaque création est une collaboration sur mesure.
         </p>
         <div className="divider" style={{ margin: '0 auto' }} />
       </div>

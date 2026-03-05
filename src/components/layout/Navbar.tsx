@@ -40,9 +40,9 @@ export function Navbar() {
 
           <Link href="/" className={styles.brand}>
             {/* Replace with your logo: */}
-            {/* <Image src="/images/logo.png" alt="Les Jardins de Sofie" width={120} height={40} /> */}
+            {/* <Image src="/images/logo.png" alt="Studio JDS" width={120} height={40} /> */}
             <span className={styles.logoText}>
-              Les Jardins de <em>Sofie</em>
+              Studio <em>JDS</em>
             </span>
           </Link>
 
@@ -61,9 +61,9 @@ export function Navbar() {
           <button className={styles.icon} aria-label="Rechercher">
             <Search size={17} strokeWidth={1.5} />
           </button>
-          <button className={styles.icon} aria-label="Compte">
+          <Link href="/compte" className={styles.icon} aria-label="Compte">
             <User size={17} strokeWidth={1.5} />
-          </button>
+          </Link>
           <button className={styles.icon} aria-label="Panier" onClick={openCart}>
             <ShoppingBag size={17} strokeWidth={1.5} />
             {totalQuantity > 0 && (
