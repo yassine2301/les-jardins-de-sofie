@@ -24,6 +24,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+  { href: '/', label: 'Accueil' },
   {
     href: '/categorie/compositions',
     label: 'Compositions',
@@ -113,7 +114,7 @@ const navItems: NavItem[] = [
   },
   {
     href: '/services',
-    label: 'Services',
+    label: 'Studio JDS',
     dropdown: [
       {
         heading: 'Nos services',
@@ -164,7 +165,7 @@ export function Navbar() {
           </button>
 
           <Link href="/" className={styles.brand}>
-            <Image src="/images/logo.png" alt="Studio JDS" width={140} height={48} priority />
+            <Image src="/images/logo.png" alt="Les Jardins de Sofie" width={58} height={56} priority />
           </Link>
         </div>
 

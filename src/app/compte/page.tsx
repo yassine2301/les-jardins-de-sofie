@@ -21,7 +21,7 @@ export default function ComptePage() {
         <div className={styles.card}>
           <div className={styles.success}>
             <h2>Bienvenue chez Studio JDS !</h2>
-            <p>Votre compte a bien été créé. Vous bénéficiez de <strong>-10% sur votre première commande</strong>.</p>
+            <p>Votre compte a bien été créé. Vous pouvez maintenant explorer nos collections et passer commande.</p>
           </div>
         </div>
       </section>
@@ -31,13 +31,12 @@ export default function ComptePage() {
   return (
     <section className={styles.section}>
       <div className={styles.card}>
-        <div className={styles.badge}>-10% offerts à l&apos;inscription</div>
         <h1 className={styles.heading}>
           {mode === 'register' ? <>Créer un <em>compte</em></> : <>Se <em>connecter</em></>}
         </h1>
         <p className={styles.desc}>
           {mode === 'register'
-            ? 'Rejoignez Studio JDS et profitez d\'avantages exclusifs.'
+            ? 'Rejoignez Studio JDS pour suivre vos commandes et découvrir nos nouveautés.'
             : 'Connectez-vous à votre compte Studio JDS.'}
         </p>
 

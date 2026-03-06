@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Hand, Check } from "lucide-react";
+import { ArrowRight, Paintbrush, Check } from "lucide-react";
 import styles from "./Hero.module.css";
 
 export function Hero() {
@@ -37,7 +37,7 @@ export function Hero() {
           </div>
           <div className={`${styles.floatCard} ${styles.fc1}`}>
             <div className={`${styles.fcIcon} ${styles.fcGreen}`}>
-              <Hand size={16} strokeWidth={1.5} />
+              <Paintbrush size={16} strokeWidth={1.5} />
             </div>
             <div className={styles.fcText}>
               <strong>Terre cuite artisanale</strong>
