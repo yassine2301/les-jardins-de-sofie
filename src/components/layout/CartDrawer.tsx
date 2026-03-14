@@ -79,7 +79,7 @@ export function CartDrawer() {
             <a href={cart.checkoutUrl} className={styles.checkout}>
               Procéder au paiement
             </a>
-            <p className={styles.note}>Livraison calculée à l&apos;étape suivante</p>
+            <p className={styles.note}>Livraison : Rabat 100 MAD · Casablanca 150 MAD</p>
           </div>
         )}
       </div>
