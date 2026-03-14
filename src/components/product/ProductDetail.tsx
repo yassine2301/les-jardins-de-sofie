@@ -103,7 +103,7 @@ export function ProductDetail({ product }: Props) {
           </div>
 
           <div className={styles.features}>
-            <div className={styles.feature}><Truck size={16} strokeWidth={1.3} /><span>Livraison Casablanca &amp; environs</span></div>
+            <div className={styles.feature}><Truck size={16} strokeWidth={1.3} /><span>Livraison : Rabat 100 MAD · Casablanca 150 MAD</span></div>
             <div className={styles.feature}><Shield size={16} strokeWidth={1.3} /><span>Pièce artisanale unique</span></div>
             <div className={styles.feature}><Leaf size={16} strokeWidth={1.3} /><span>Guide d&apos;entretien inclus</span></div>
           </div>
