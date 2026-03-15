@@ -165,7 +165,7 @@ export function Navbar() {
           </button>
 
           <Link href="/" className={styles.brand}>
-            <Image src="/images/logo2.jpeg" alt="Les Jardins de Sofie" width={58} height={56} priority />
+            <Image src="/images/logo2.png" alt="Les Jardins de Sofie" width={140} height={48} priority />
           </Link>
         </div>
 
