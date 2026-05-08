@@ -19,7 +19,7 @@ export function Editorial() {
             Chaque projet est une collaboration unique — nous concevons
             des espaces végétaux qui reflètent votre identité et vos ambitions.
           </p>
-          <Link href="/services/corporate" className={styles.btn}>
+          <Link href="/services" className={styles.btn}>
             <span>Découvrir nos services</span>
             <ArrowRight size={15} strokeWidth={1.5} />
           </Link>

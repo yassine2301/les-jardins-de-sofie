@@ -17,11 +17,7 @@ export default async function CategoryPage({ params }: { params: { handle: strin
   return (
     <section className={styles.section}>
       <div className={styles.header}>
-        <span className="section-label">Collection</span>
         <h1 className="section-title">{collection?.title || params.handle}</h1>
-        {collection?.description && (
-          <p className="section-desc">{collection.description}</p>
-        )}
       </div>
       <div className={styles.grid}>
         {products.map((product) => (

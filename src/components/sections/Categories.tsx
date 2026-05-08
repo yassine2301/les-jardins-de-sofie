@@ -27,7 +27,6 @@ export function Categories({ collections }: Props) {
     <section className={styles.section}>
       <div className={styles.header}>
         <span className="section-label">Explorer par univers</span>
-        <h2 className="section-title">Nos univers</h2>
       </div>
       <div className={styles.grid}>
         {cats.map((cat) => (
@@ -42,7 +41,6 @@ export function Categories({ collections }: Props) {
             <div className={styles.overlay} />
             <div className={styles.info}>
               <h3 className={styles.name}>{cat.title}</h3>
-              <span className={styles.desc}>{cat.desc}</span>
             </div>
             <div className={styles.arrow}>
               <ArrowRight size={14} strokeWidth={1.5} />

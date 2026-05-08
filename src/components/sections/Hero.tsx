@@ -10,9 +10,6 @@ export function Hero() {
       <div className={styles.dots} />
       <div className={styles.content}>
         <div className={styles.text}>
-          <div className={styles.tag}>
-            Studio JDS
-          </div>
           <h1 className={styles.heading}>
             Respirez<br />votre <em>intérieur.</em>
           </h1>

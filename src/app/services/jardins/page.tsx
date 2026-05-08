@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from '../services-form.module.css';
 
 export default function JardinsPage() {
@@ -29,8 +30,20 @@ export default function JardinsPage() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <span className={styles.label}>Studio JDS</span>
-        <h1 className={styles.heading}>Conception de <em>jardins</em></h1>
+        <div className={styles.hero}>
+          <Image
+            src="/images/services/jardins-full.jpg"
+            alt="Conception de jardins"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 680px"
+            className={styles.heroImg}
+          />
+          <div className={styles.heroOverlay}>
+            <span className={styles.heroLabel}>Studio JDS</span>
+            <h1 className={styles.heroTitle}>Conception de <em>jardins</em></h1>
+          </div>
+        </div>
         <p className={styles.intro}>
           Du jardin privé au projet immobilier, nous concevons des espaces verts sur mesure qui reflètent votre style et s&apos;adaptent à votre environnement.
         </p>
