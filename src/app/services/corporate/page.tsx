@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from '../services-form.module.css';
 
 export default function CorporatePage() {
@@ -29,8 +30,20 @@ export default function CorporatePage() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <span className={styles.label}>Studio JDS</span>
-        <h1 className={styles.heading}>Cadeaux <em>corporate</em></h1>
+        <div className={styles.hero}>
+          <Image
+            src="/images/services/corporate-full.jpg"
+            alt="Cadeaux corporate"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 680px"
+            className={styles.heroImg}
+          />
+          <div className={styles.heroOverlay}>
+            <span className={styles.heroLabel}>Studio JDS</span>
+            <h1 className={styles.heroTitle}>Cadeaux <em>corporate</em></h1>
+          </div>
+        </div>
         <p className={styles.intro}>
           Offrez des cadeaux uniques et artisanaux à vos collaborateurs, clients ou partenaires. Nous créons des coffrets sur mesure pour vos événements d&apos;entreprise.
         </p>

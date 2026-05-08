@@ -158,6 +158,89 @@
   justify-content: center;
 }
 
+/* ─── Search panel ─── */
+.searchPanel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-bottom: 1px solid rgba(167, 138, 127, 0.12);
+  box-shadow: 0 12px 30px rgba(115, 87, 81, 0.08);
+  padding: 1rem 0;
+  animation: searchFadeIn 0.2s ease-out;
+  z-index: 150;
+}
+
+@keyframes searchFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.searchForm {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--grey-light);
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--black);
+  background: var(--sand-pale);
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.searchInput:focus {
+  border-color: var(--bordeaux);
+}
+
+.searchSubmit {
+  padding: 0.85rem 1.4rem;
+  background: var(--bordeaux);
+  color: var(--sand);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.searchSubmit:hover {
+  background: var(--chocolate-dark);
+}
+
+.searchClose {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--chocolate);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.searchClose:hover {
+  background: var(--sand);
+}
+
 /* ─── Hamburger ─── */
 .hamburger { display: none; color: var(--chocolate); }
 
