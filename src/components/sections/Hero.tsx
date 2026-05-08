@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, Paintbrush, Check } from "lucide-react";
 import styles from "./Hero.module.css";
 
@@ -30,7 +29,17 @@ export function Hero() {
         </div>
         <div className={styles.visual}>
           <div className={styles.imgWrap}>
-            <Image src="/images/hero-garden.jpg" alt="Jardin avec olivier en pot artisanal" fill style={{objectFit:'cover'}} priority />
+            <video
+              className={styles.heroVideo}
+              src="/videos/hero.mp4"
+              poster="/images/hero-garden.jpg"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              aria-label="Présentation Les Jardins de Sofie"
+            />
           </div>
           <div className={`${styles.floatCard} ${styles.fc1}`}>
             <div className={`${styles.fcIcon} ${styles.fcGreen}`}>
