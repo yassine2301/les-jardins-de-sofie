@@ -57,7 +57,7 @@ export default async function HomePage() {
 
       <ProductCarousel
         label="Faits main en terre cuite"
-        title="Nos pots artisanaux"
+        title="Nos pots"
         products={potProducts}
         id="pots"
       />

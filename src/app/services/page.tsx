@@ -24,7 +24,7 @@ const services = [
     href: '/services/sur-mesure',
     icon: Paintbrush,
     title: 'Créations sur mesure',
-    description: 'Une composition unique pensée pour votre espace. Nous créons des pièces personnalisées selon vos envies, couleurs et dimensions.',
+    description: 'Des compositions uniques pensées pour vos espaces. Nous créons des pièces personnalisées selon vos envies, couleurs et dimensions.',
   },
   {
     href: '/services/jardins',

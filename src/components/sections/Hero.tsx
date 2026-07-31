@@ -17,9 +17,9 @@ export function Hero() {
             Respirez<br />votre <em>intérieur.</em>
           </h1>
           <p className={styles.sub}>
-            Compositions uniques de plantes d&apos;intérieur et pots artisanaux
-            en terre cuite. Chaque pièce est conçue pour sublimer votre espace
-            de vie.
+            Compositions végétales et pots façonnés à la main en terre cuite
+            et céramique, pensés dans une esthétique brute et organique pour
+            apporter une présence naturelle et authentique à vos espaces.
           </p>
           <div className={styles.actions}>
             <Link href="/categorie/compositions" className="btn-primary">

@@ -3,7 +3,7 @@ import styles from './Reassurance.module.css';
 
 const items = [
   { icon: MapPin, title: 'Livraison soignée', desc: 'Rabat : 100 MAD · Casablanca : 150 MAD. Emballage protecteur premium.' },
-  { icon: Shield, title: 'Artisanat garanti', desc: 'Pots en terre cuite, chaque pièce est unique.' },
+  { icon: Shield, title: 'Savoir-faire artisanal', desc: 'Formes organiques, textures brutes et finitions façonnées à la main.' },
   { icon: Leaf,   title: 'Conseils inclus', desc: "Guide d'entretien détaillé avec chaque plante." },
   { icon: Users,  title: 'Service attentionné', desc: 'Joignable par WhatsApp & téléphone.' },
 ];
