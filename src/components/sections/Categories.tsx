@@ -7,8 +7,8 @@ import styles from './Categories.module.css';
 const fallbackCategories = [
   { handle: 'compositions', title: 'Compositions', desc: 'Pot + Plante, prêtes à vivre', image: '/images/categories/compositions.jpg' },
   { handle: 'plantes', title: 'Plantes', desc: 'Petites, standards & grandes', image: '/images/categories/plantes.jpg' },
-  { handle: 'pots', title: 'Pots artisanaux', desc: 'Erratum, Saxum, Berceau, Naturalis', image: '/images/categories/pots.jpg' },
-  { handle: 'grands-formats', title: 'Grands formats', desc: 'Pièces statement 1m50+', image: '/images/categories/grands-formats.jpg' },
+  { handle: 'pots', title: 'Pots', desc: 'Erratum, Saxum, Berceau, Naturalis', image: '/images/categories/pots.jpg' },
+  { handle: 'grands-formats', title: 'Jarres', desc: 'Pièces statement 1m50+', image: '/images/categories/grands-formats.jpg' },
 ];
 
 interface Props { collections: ShopifyCollection[]; }

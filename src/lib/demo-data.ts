@@ -193,13 +193,13 @@ export const demoCollections: ShopifyCollection[] = [
     products: { edges: demoProducts.filter(p => p.tags.includes('plante')).map(p => ({ node: p })) },
   },
   {
-    id: 'col-3', handle: 'pots', title: 'Pots artisanaux',
+    id: 'col-3', handle: 'pots', title: 'Pots',
     description: 'Erratum, Saxum, Berceau, Naturalis',
     image: img(CATEGORIES + 'pots.jpg'),
     products: { edges: demoProducts.filter(p => p.tags.includes('pot')).map(p => ({ node: p })) },
   },
   {
-    id: 'col-4', handle: 'grands-formats', title: 'Grands formats',
+    id: 'col-4', handle: 'grands-formats', title: 'Jarres',
     description: 'Pièces statement 1m50+',
     image: img(CATEGORIES + 'grands-formats.jpg'),
     products: { edges: [] },

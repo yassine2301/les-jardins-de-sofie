@@ -32,26 +32,9 @@ const navItems: NavItem[] = [
       {
         heading: 'Par type',
         links: [
-          { href: '/categorie/compositions', label: 'Toutes les compositions' },
           { href: '/categorie/compositions?size=petite', label: 'Petites compositions' },
-          { href: '/categorie/compositions?size=standard', label: 'Standards' },
+          { href: '/categorie/compositions?size=standard', label: 'Compositions standards' },
           { href: '/categorie/compositions?size=grande', label: 'Grandes compositions' },
-        ],
-      },
-      {
-        heading: 'Par style',
-        links: [
-          { href: '/categorie/compositions?style=minimaliste', label: 'Minimaliste' },
-          { href: '/categorie/compositions?style=tropical', label: 'Tropical' },
-          { href: '/categorie/compositions?style=mediterraneen', label: 'Méditerranéen' },
-        ],
-      },
-      {
-        heading: 'Sélection',
-        links: [
-          { href: '/categorie/compositions?tag=best-sellers', label: 'Best-sellers' },
-          { href: '/categorie/compositions?tag=nouveautes', label: 'Nouveautés' },
-          { href: '/categorie/grands-formats', label: 'Grands formats' },
         ],
       },
     ],
@@ -63,33 +46,16 @@ const navItems: NavItem[] = [
       {
         heading: 'Par taille',
         links: [
-          { href: '/categorie/plantes', label: 'Toutes les plantes' },
           { href: '/categorie/plantes?size=petite', label: 'Petites plantes' },
-          { href: '/categorie/plantes?size=standard', label: 'Standards' },
+          { href: '/categorie/plantes?size=standard', label: 'Plantes standards' },
           { href: '/categorie/plantes?size=grande', label: 'Grandes plantes' },
-        ],
-      },
-      {
-        heading: 'Par type',
-        links: [
-          { href: '/categorie/plantes?type=vertes', label: 'Plantes vertes' },
-          { href: '/categorie/plantes?type=grasses', label: 'Plantes grasses' },
-          { href: '/categorie/plantes?type=oliviers', label: 'Oliviers & palmiers' },
-          { href: '/categorie/plantes?type=facile', label: 'Faciles d\'entretien' },
-        ],
-      },
-      {
-        heading: 'Sélection',
-        links: [
-          { href: '/categorie/plantes?tag=best-sellers', label: 'Best-sellers' },
-          { href: '/categorie/plantes?tag=nouveautes', label: 'Nouveautés' },
         ],
       },
     ],
   },
   {
     href: '/categorie/pots',
-    label: 'Pots artisanaux',
+    label: 'Pots',
     dropdown: [
       {
         heading: 'Par collection',
@@ -99,6 +65,8 @@ const navItems: NavItem[] = [
           { href: '/categorie/pots?col=saxum', label: 'Saxum' },
           { href: '/categorie/pots?col=berceau', label: 'Berceau' },
           { href: '/categorie/pots?col=naturalis', label: 'Naturalis' },
+          { href: '/categorie/pots?col=meandre', label: 'Méandre' },
+          { href: '/categorie/pots?col=panier', label: 'Panier' },
         ],
       },
       {

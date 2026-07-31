@@ -4,7 +4,7 @@ export function BrandStory() {
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
-        <span className="section-label">Notre philosophie</span>
+        <span className="section-label">Studio JDS</span>
         <h2 className="section-title">
           Cadeaux corporate, événements,<br /><em>sur-mesure et jardins.</em>
         </h2>

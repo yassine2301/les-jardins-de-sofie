@@ -34,8 +34,8 @@ export function Footer() {
           <ul>
             <li><Link href="/categorie/compositions">Compositions</Link></li>
             <li><Link href="/categorie/plantes">Plantes</Link></li>
-            <li><Link href="/categorie/pots">Pots artisanaux</Link></li>
-            <li><Link href="/categorie/grands-formats">Grands formats</Link></li>
+            <li><Link href="/categorie/pots">Pots</Link></li>
+            <li><Link href="/categorie/grands-formats">Jarres</Link></li>
           </ul>
         </div>
         <div className={styles.col}>
