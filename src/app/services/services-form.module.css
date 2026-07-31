@@ -9,6 +9,65 @@
   margin: 0 auto;
 }
 
+.hero {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 14px 40px rgba(115, 87, 81, 0.12);
+}
+
+.heroImg {
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(54, 28, 24, 0.05) 0%,
+    rgba(54, 28, 24, 0.55) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.8rem 2rem;
+}
+
+.heroLabel {
+  font-weight: 500;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 0.5rem;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.1;
+  color: var(--white);
+}
+
+.heroTitle em {
+  font-style: italic;
+  color: var(--sand-pale);
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 210px;
+  }
+  .heroOverlay {
+    padding: 1.4rem 1.4rem;
+  }
+}
+
 .label {
   font-weight: 500;
   font-size: 0.66rem;
