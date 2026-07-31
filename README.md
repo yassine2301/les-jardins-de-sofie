@@ -6,6 +6,27 @@ Site e-commerce de **Studio JDS** : compositions végétales, plantes et pots ar
 
 ---
 
+## 🚦 État actuel du site — à savoir absolument
+
+> ### ⚠️ Le site est une **vitrine**. On ne peut pas encore y acheter.
+>
+> La boutique **Shopify n'est pas connectée**. Concrètement :
+>
+> | Ce qui fonctionne | Ce qui ne fonctionne pas encore |
+> |---|---|
+> | ✅ Navigation, menus, recherche | ❌ **Aucun paiement possible** |
+> | ✅ Fiches produits, photos, prix affichés | ❌ Le bouton « Procéder au paiement » ne mène nulle part |
+> | ✅ Ajout au panier (visuel uniquement) | ❌ Aucune commande n'arrive nulle part |
+> | ✅ Formulaires de contact et de services | ❌ Les formulaires n'envoient **aucun email** |
+> | ✅ Création de compte (affichage) | ❌ Aucun compte n'est réellement enregistré |
+>
+> **Les produits et prix affichés sont des données de démonstration**, écrites dans
+> `src/lib/demo-data.ts`. Ce ne sont pas de vrais produits en stock.
+>
+> 👉 Pour vendre pour de vrai, il faut [connecter Shopify](#-connecter-shopify-pour-vendre-réellement).
+
+---
+
 ## 📖 À lire en premier
 
 Ce guide est écrit pour pouvoir modifier le site **sans être développeur**.
@@ -156,7 +177,7 @@ Si tu supprimes une photo encore utilisée : le site continue de fonctionner, ma
 
 Le site fonctionne actuellement en **mode démo** : les produits et les prix sont écrits dans le fichier `src/lib/demo-data.ts`.
 
-Le jour où la boutique **Shopify** sera connectée, les produits et prix viendront automatiquement de Shopify, et ce fichier ne servira plus. *(voir [Connecter Shopify](#-connecter-shopify-plus-tard))*
+Le jour où la boutique **Shopify** sera connectée, les produits et prix viendront automatiquement de Shopify, et ce fichier ne servira plus. *(voir [Connecter Shopify](#-connecter-shopify-pour-vendre-réellement))*
 
 ### Modifier un prix
 
@@ -306,23 +327,58 @@ Le site se met à jour tout seul ~2 minutes plus tard.
 
 ---
 
-## 🛒 Connecter Shopify (plus tard)
+## 🛒 Connecter Shopify (pour vendre réellement)
 
-Tant que les clés ne sont pas renseignées, le site tourne en **mode démo** avec les produits de `demo-data.ts`.
+### Pourquoi c'est nécessaire
 
-Pour connecter la vraie boutique :
+Aujourd'hui le site tourne en **mode démo** : il affiche les produits écrits dans
+`src/lib/demo-data.ts` et **aucune vente n'est possible**.
 
-1. **Shopify Admin** → Paramètres → Applications → *Développer des applications*
-2. Créer une application, activer les **Storefront API scopes**
-3. Copier le **Storefront access token**
-4. Renseigner les valeurs dans **Vercel** → Settings → *Environment Variables* :
+Le site est construit en « **headless** » : Next.js gère l'apparence, Shopify gère
+le commerce. Les deux sont indépendants — il suffit de les relier.
+
+### Ce que Shopify prendra en charge une fois connecté
+
+- Le catalogue produits, les photos et les prix *(plus besoin de toucher au code)*
+- Les stocks et les variantes (tailles, couleurs)
+- **Le paiement** — page sécurisée hébergée par Shopify (CB, CMI…)
+- Les commandes, les factures et les emails de confirmation
+- Les codes promo, dont `BIENVENUE10`
+- Les frais de livraison réels, calculés au paiement
+
+### Les étapes
+
+1. Avoir une **boutique Shopify** avec un abonnement actif
+2. **Shopify Admin** → Paramètres → Applications → *Développer des applications*
+3. Créer une application, activer les **Storefront API scopes** *(lecture produits + gestion panier)*
+4. Copier le **Storefront access token**
+5. Dans **Vercel** → ton projet → Settings → *Environment Variables*, ajouter :
 
 ```
 NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN = ta-boutique.myshopify.com
 NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN = le-token-copié
 ```
 
-Une fois connecté, **produits, prix, stocks et paiement** sont gérés depuis Shopify.
+6. **Redéployer** le site (Vercel → Deployments → *Redeploy*)
+
+> ⚠️ Les variables ne sont prises en compte qu'**après un nouveau déploiement**.
+
+### Comment vérifier que ça a marché
+
+Le site bascule automatiquement : dès que les deux clés sont valides, il arrête
+d'utiliser `demo-data.ts` et affiche les vrais produits Shopify.
+
+Signe le plus simple : le bouton **« Procéder au paiement »** du panier renvoie
+vers une page `…myshopify.com/checkout` au lieu de ne rien faire.
+
+### À configurer aussi dans Shopify
+
+| Élément | Où |
+|---|---|
+| Frais de livraison (Rabat 100 MAD · Casablanca 150 MAD) | Paramètres → Expédition |
+| Code promo `BIENVENUE10` (−10 %) | Réductions |
+| Emails de confirmation de commande | Paramètres → Notifications |
+| Tags produits `composition` / `plante` / `pot` | Sur chaque produit |
 
 ---
 
@@ -372,12 +428,26 @@ les-jardins-de-sofie/
 
 ## 📌 En attente / à faire
 
-- [ ] **Police Abiah** — fichiers `.woff2` avec licence web à fournir
+### 🔴 Bloquant pour vendre
+
+- [ ] **Connexion Shopify** — sans elle, **aucune vente n'est possible**. C'est la priorité n°1.
+- [ ] **Frais de livraison réels** — à paramétrer dans Shopify (actuellement juste affichés en texte)
+- [ ] **Code promo BIENVENUE10** — à créer dans Shopify, sinon il ne réduit rien
+
+### 🟠 Important
+
+- [ ] **Formulaires de contact et de services** — ils affichent « Message envoyé » mais **n'envoient rien**.
+      À brancher sur un service d'envoi (Resend, SendGrid) ou sur un outil type Formspree.
+- [ ] **Email de confirmation de commande** — le modèle existe (`src/lib/order-email.ts`),
+      reste à brancher un service d'envoi
+- [ ] **Comptes clients** — la page affiche une confirmation, mais aucun compte n'est enregistré
+      *(Shopify gère les comptes clients nativement une fois connecté)*
+
+### 🟡 Contenu à fournir
+
+- [ ] **Police Abiah** — fichiers `.woff2` **avec licence web** (absente de Google Fonts)
 - [ ] **Photos des 4 services** — les cartes de la page Studio JDS affichent des icônes, pas des photos
-- [ ] **Produits Méandre & Panier** — présents dans le menu, mais aucun produit associé pour l'instant
-- [ ] **Code promo BIENVENUE10** — à créer dans Shopify pour qu'il fonctionne réellement
-- [ ] **Email de confirmation** — le modèle existe, reste à brancher un service d'envoi (Resend ou SendGrid)
-- [ ] **Connexion Shopify** — pour gérer produits, stocks et paiements
+- [ ] **Produits Méandre & Panier** — présents dans le menu, mais aucun produit associé
 
 ---
 
