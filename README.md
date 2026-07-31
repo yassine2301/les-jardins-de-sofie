@@ -294,6 +294,18 @@ cd les-jardins-de-sofie
 npm install
 ```
 
+### 2 bis. Se présenter à Git (une seule fois)
+
+Pour que tes modifications soient signées à ton nom :
+
+```bash
+git config user.name "ton-pseudo-github"
+git config user.email "ton-email@exemple.com"
+```
+
+> ⚠️ Utilise **le même email que ton compte GitHub**, sinon tes commits
+> n'apparaîtront pas à ton nom dans l'historique du projet.
+
 ### 3. Lancer le site en local
 
 ```bash
