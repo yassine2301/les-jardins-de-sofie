@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from '../services-form.module.css';
 
 export default function SurMesurePage() {
@@ -29,8 +30,20 @@ export default function SurMesurePage() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <span className={styles.label}>Studio JDS</span>
-        <h1 className={styles.heading}>Création <em>sur mesure</em></h1>
+        <div className={styles.hero}>
+          <Image
+            src="/images/services/sur-mesure-full.jpg"
+            alt="Création sur mesure"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 680px"
+            className={styles.heroImg}
+          />
+          <div className={styles.heroOverlay}>
+            <span className={styles.heroLabel}>Studio JDS</span>
+            <h1 className={styles.heroTitle}>Création <em>sur mesure</em></h1>
+          </div>
+        </div>
         <p className={styles.intro}>
           Chaque pièce est unique. Parlez-nous de votre projet et nous créerons ensemble une pièce artisanale qui correspond parfaitement à votre vision.
         </p>

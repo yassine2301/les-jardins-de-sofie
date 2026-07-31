@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MessageCircle } from 'lucide-react';
 import styles from './contact.module.css';
 
 export default function ContactPage() {
@@ -26,45 +26,40 @@ export default function ContactPage() {
 
         <div className={styles.grid}>
           <div className={styles.info}>
-            <div className={styles.infoCard}>
+            <a href="tel:+212667753611" className={styles.infoCard}>
               <div className={styles.infoIcon}>
                 <Phone size={18} strokeWidth={1.3} />
               </div>
               <div>
                 <h3>Téléphone</h3>
-                <a href="tel:+212667753611">+212 667-753611</a>
+                <span>+212 667-753611</span>
               </div>
-            </div>
+            </a>
 
-            <div className={styles.infoCard}>
+            <a href="mailto:lesjardinsdesofie@gmail.com" className={styles.infoCard}>
               <div className={styles.infoIcon}>
                 <Mail size={18} strokeWidth={1.3} />
               </div>
               <div>
                 <h3>Email</h3>
-                <a href="mailto:lesjardinsdesofie@gmail.com">lesjardinsdesofie@gmail.com</a>
+                <span>lesjardinsdesofie@gmail.com</span>
               </div>
-            </div>
+            </a>
 
-            <div className={styles.infoCard}>
+            <a
+              href="https://wa.me/212667753611"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.infoCard}
+            >
               <div className={styles.infoIcon}>
                 <MessageCircle size={18} strokeWidth={1.3} />
               </div>
               <div>
                 <h3>WhatsApp</h3>
-                <a href="https://wa.me/212667753611" target="_blank" rel="noopener noreferrer">Envoyer un message</a>
+                <span>Envoyer un message</span>
               </div>
-            </div>
-
-            <div className={styles.infoCard}>
-              <div className={styles.infoIcon}>
-                <MapPin size={18} strokeWidth={1.3} />
-              </div>
-              <div>
-                <h3>Adresse</h3>
-                <p>Rabat, Maroc</p>
-              </div>
-            </div>
+            </a>
           </div>
 
           <div className={styles.formCard}>

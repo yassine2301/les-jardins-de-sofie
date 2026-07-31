@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from '../services-form.module.css';
 
 export default function EvenementsPage() {
@@ -29,8 +30,20 @@ export default function EvenementsPage() {
   return (
     <section className={styles.section}>
       <div className={styles.container}>
-        <span className={styles.label}>Studio JDS</span>
-        <h1 className={styles.heading}>Location pour <em>événement</em></h1>
+        <div className={styles.hero}>
+          <Image
+            src="/images/services/evenements-full.jpg"
+            alt="Location pour événement"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 680px"
+            className={styles.heroImg}
+          />
+          <div className={styles.heroOverlay}>
+            <span className={styles.heroLabel}>Studio JDS</span>
+            <h1 className={styles.heroTitle}>Location pour <em>événement</em></h1>
+          </div>
+        </div>
         <p className={styles.intro}>
           Sublimez vos événements avec nos compositions végétales. Nous créons des ambiances uniques pour mariages, lancements de marque, dîners et événements corporate.
         </p>

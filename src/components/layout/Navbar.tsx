@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, User, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
@@ -99,9 +100,13 @@ const navItems: NavItem[] = [
 ];
 
 export function Navbar() {
+  const router = useRouter();
   const [elevated, setElevated] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { openCart, totalQuantity } = useCart();
 
@@ -110,6 +115,21 @@ export function Navbar() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    if (searchOpen) {
+      searchInputRef.current?.focus();
+    }
+  }, [searchOpen]);
+
+  function submitSearch(e: React.FormEvent) {
+    e.preventDefault();
+    const q = searchValue.trim();
+    if (q.length === 0) return;
+    setSearchOpen(false);
+    setSearchValue('');
+    router.push(`/recherche?q=${encodeURIComponent(q)}`);
+  }
 
   function handleMouseEnter(label: string) {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -133,7 +153,7 @@ export function Navbar() {
           </button>
 
           <Link href="/" className={styles.brand}>
-            <Image src="/images/logo2.jpeg" alt="Les Jardins de Sofie" width={58} height={56} priority />
+            <Image src="/images/logo2.png" alt="Les Jardins de Sofie" width={140} height={48} priority />
           </Link>
         </div>
 
@@ -180,7 +200,11 @@ export function Navbar() {
         </ul>
 
         <div className={styles.right}>
-          <button className={styles.icon} aria-label="Rechercher">
+          <button
+            className={styles.icon}
+            aria-label="Rechercher"
+            onClick={() => setSearchOpen((s) => !s)}
+          >
             <Search size={17} strokeWidth={1.5} />
           </button>
           <Link href="/compte" className={styles.icon} aria-label="Compte">
@@ -194,6 +218,33 @@ export function Navbar() {
           </button>
         </div>
       </div>
+
+      {searchOpen && (
+        <div className={styles.searchPanel}>
+          <form onSubmit={submitSearch} className={styles.searchForm}>
+            <input
+              ref={searchInputRef}
+              type="search"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder="Rechercher une plante, un pot, une composition…"
+              className={styles.searchInput}
+              aria-label="Champ de recherche"
+            />
+            <button type="submit" className={styles.searchSubmit}>
+              Rechercher
+            </button>
+            <button
+              type="button"
+              className={styles.searchClose}
+              aria-label="Fermer la recherche"
+              onClick={() => setSearchOpen(false)}
+            >
+              <X size={18} strokeWidth={1.5} />
+            </button>
+          </form>
+        </div>
+      )}
 
       {/* Mobile menu */}
       {mobileOpen && (
