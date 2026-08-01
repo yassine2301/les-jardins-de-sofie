@@ -470,7 +470,8 @@ les-jardins-de-sofie/
 
       Les deux fichiers marqués 🟡 contiennent un **visuel de marque provisoire**
       en 1600×900, dessiné à la charte, le temps de recevoir les vraies photos :
-      bicolore crème/bordeaux évoquant le coffret pour l'un, vases rayés pour l'autre.
+      reproduction au trait du coffret JDS (bougie & plante, bicolore crème/bordeaux)
+      pour l'un, vases rayés pour l'autre.
       Ils sont nets et distincts — ils remplacent d'anciennes photos floues.
 
       Pour les remplacer : déposer les vraies photos en **paysage ~1600×900**,
