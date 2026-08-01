@@ -461,16 +461,20 @@ les-jardins-de-sofie/
 - [ ] **2 photos de services à remplacer** — chaque service utilise **un seul fichier**,
       affiché à la fois sur la carte de la page Studio JDS et en bannière de sa page :
 
-      | Fichier à remplacer | Photo attendue | État |
+      | Fichier | Photo attendue | État actuel |
       |---|---|---|
-      | `corporate-full.jpg` | Coffret JDS bordeaux & crème | ⚠️ mauvaise photo, 333×500 |
-      | `sur-mesure-full.jpg` | Vases rayés noir et blanc | ⚠️ mauvaise photo, 333×500 |
-      | `evenements-full.jpg` | Hall en marbre | ✅ correcte |
-      | `jardins-full.jpg` | Olivier en pot | ✅ correcte |
+      | `corporate-full.jpg` | Coffret JDS bordeaux & crème | 🟡 visuel logo provisoire |
+      | `sur-mesure-full.jpg` | Vases rayés noir et blanc | 🟡 visuel logo provisoire |
+      | `evenements-full.jpg` | Hall en marbre | ✅ photo définitive |
+      | `jardins-full.jpg` | Olivier en pot | ✅ photo définitive |
 
-      Les deux photos à remplacer sont en **portrait basse résolution** alors qu'elles
-      sont affichées en large → elles apparaissent **floues**. Fournir du **paysage
-      ~1600×900**, compressé sous 300 Ko. Garder exactement le même nom de fichier.
+      Les deux fichiers marqués 🟡 contiennent un **visuel de marque provisoire**
+      (logo JDS sur fond sable, 1600×900) mis en place le temps de recevoir les vraies
+      photos. Ils sont nets et à la charte — ils remplacent d'anciennes photos floues.
+
+      Pour les remplacer : déposer les vraies photos en **paysage ~1600×900**,
+      compressées sous 300 Ko, **en gardant exactement le même nom de fichier**.
+      Les cartes et les bannières se mettront à jour automatiquement.
 - [ ] **Produits Méandre & Panier** — présents dans le menu, mais aucun produit associé
 
 ---
