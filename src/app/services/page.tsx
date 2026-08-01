@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Gift, Calendar, Paintbrush, TreePine, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 import styles from './services.module.css';
 
 export const metadata = {
@@ -10,25 +11,25 @@ export const metadata = {
 const services = [
   {
     href: '/services/corporate',
-    icon: Gift,
+    image: '/images/services/corporate-full.jpg',
     title: 'Cadeaux corporate',
     description: 'Offrez des cadeaux uniques et artisanaux à vos collaborateurs, clients ou partenaires. Coffrets sur mesure pour vos événements d\'entreprise.',
   },
   {
     href: '/services/evenements',
-    icon: Calendar,
+    image: '/images/services/evenements-full.jpg',
     title: 'Location événements',
     description: 'Sublimez vos événements avec nos compositions végétales. Location de plantes et mise en scène pour mariages, séminaires et réceptions.',
   },
   {
     href: '/services/sur-mesure',
-    icon: Paintbrush,
+    image: '/images/services/sur-mesure-full.jpg',
     title: 'Créations sur mesure',
     description: 'Des compositions uniques pensées pour vos espaces. Nous créons des pièces personnalisées selon vos envies, couleurs et dimensions.',
   },
   {
     href: '/services/jardins',
-    icon: TreePine,
+    image: '/images/services/jardins-full.jpg',
     title: 'Conception de jardins',
     description: 'De la terrasse au jardin complet, nous concevons des espaces verts harmonieux adaptés au climat marocain.',
   },
@@ -52,15 +53,23 @@ export default function ServicesPage() {
         <div className={styles.grid}>
           {services.map((service) => (
             <Link key={service.href} href={service.href} className={styles.card}>
-              <div className={styles.iconWrap}>
-                <service.icon size={22} strokeWidth={1.3} />
+              <div className={styles.cardImgWrap}>
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  fill
+                  sizes="(max-width: 600px) 100vw, 440px"
+                  className={styles.cardImg}
+                />
               </div>
-              <h2 className={styles.cardTitle}>{service.title}</h2>
-              <p className={styles.cardDesc}>{service.description}</p>
-              <span className={styles.cardLink}>
-                Découvrir
-                <ArrowRight size={13} strokeWidth={1.5} />
-              </span>
+              <div className={styles.cardBody}>
+                <h2 className={styles.cardTitle}>{service.title}</h2>
+                <p className={styles.cardDesc}>{service.description}</p>
+                <span className={styles.cardLink}>
+                  Découvrir
+                  <ArrowRight size={13} strokeWidth={1.5} />
+                </span>
+              </div>
             </Link>
           ))}
         </div>

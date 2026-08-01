@@ -51,7 +51,7 @@
 .card {
   background: var(--white);
   border-radius: 18px;
-  padding: 2.2rem;
+  overflow: hidden;
   border: 1px solid rgba(167, 138, 127, 0.08);
   box-shadow: 0 10px 40px rgba(115, 87, 81, 0.06);
   text-decoration: none;
@@ -59,7 +59,6 @@
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
 }
 
 .card:hover {
@@ -67,16 +66,29 @@
   box-shadow: 0 16px 48px rgba(115, 87, 81, 0.12);
 }
 
-.iconWrap {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+.cardImgWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
   background: var(--sand-light);
+  overflow: hidden;
+}
+
+.cardImg {
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+
+.card:hover .cardImg {
+  transform: scale(1.04);
+}
+
+.cardBody {
+  padding: 1.8rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--bordeaux);
-  margin-bottom: 0.3rem;
+  flex-direction: column;
+  gap: 0.7rem;
+  flex: 1;
 }
 
 .cardTitle {
