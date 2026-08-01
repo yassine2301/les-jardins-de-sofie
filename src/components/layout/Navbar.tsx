@@ -103,6 +103,7 @@ export function Navbar() {
   const router = useRouter();
   const [elevated, setElevated] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -140,13 +141,18 @@ export function Navbar() {
     timeoutRef.current = setTimeout(() => setActiveDropdown(null), 150);
   }
 
+  function closeMobile() {
+    setMobileOpen(false);
+    setMobileSection(null);
+  }
+
   return (
     <nav className={`${styles.nav} ${elevated ? styles.elevated : ''}`}>
       <div className={styles.inner}>
         <div className={styles.left}>
           <button
             className={styles.hamburger}
-            onClick={() => setMobileOpen(!mobileOpen)}
+            onClick={() => (mobileOpen ? closeMobile() : setMobileOpen(true))}
             aria-label="Menu"
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -246,39 +252,63 @@ export function Navbar() {
         </div>
       )}
 
-      {/* Mobile menu */}
+      {/* Mobile menu — accordéon : une seule section ouverte à la fois */}
       {mobileOpen && (
         <div className={styles.mobileMenu}>
-          {navItems.map((item) => (
-            <div key={item.label} className={styles.mobileItem}>
-              <Link
-                href={item.href}
-                className={styles.mobileLink}
-                onClick={() => !item.dropdown && setMobileOpen(false)}
-              >
-                {item.label}
-              </Link>
-              {item.dropdown && (
-                <div className={styles.mobileSubmenu}>
-                  {item.dropdown.map((col) => (
-                    <div key={col.heading}>
-                      <span className={styles.mobileSubHeading}>{col.heading}</span>
-                      {col.links.map((link) => (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          className={styles.mobileSubLink}
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
+          {navItems.map((item) => {
+            const open = mobileSection === item.label;
+
+            if (!item.dropdown) {
+              return (
+                <div key={item.label} className={styles.mobileItem}>
+                  <Link
+                    href={item.href}
+                    className={styles.mobileLink}
+                    onClick={closeMobile}
+                  >
+                    {item.label}
+                  </Link>
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            }
+
+            return (
+              <div key={item.label} className={styles.mobileItem}>
+                <button
+                  type="button"
+                  className={`${styles.mobileLink} ${styles.mobileToggle} ${open ? styles.mobileToggleOpen : ''}`}
+                  onClick={() => setMobileSection(open ? null : item.label)}
+                  aria-expanded={open}
+                >
+                  {item.label}
+                  <ChevronDown size={15} strokeWidth={1.6} className={styles.mobileChevron} />
+                </button>
+
+                {open && (
+                  <div className={styles.mobileSubmenu}>
+                    {item.dropdown.map((col) => (
+                      <div key={col.heading}>
+                        <span className={styles.mobileSubHeading}>{col.heading}</span>
+                        {col.links.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className={styles.mobileSubLink}
+                            onClick={closeMobile}
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ))}
+                    <Link href={item.href} className={styles.mobileSeeAll} onClick={closeMobile}>
+                      Voir tout
+                    </Link>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </nav>
