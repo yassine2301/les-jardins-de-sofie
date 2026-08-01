@@ -469,8 +469,9 @@ les-jardins-de-sofie/
       | `jardins-full.jpg` | Olivier en pot | ✅ photo définitive |
 
       Les deux fichiers marqués 🟡 contiennent un **visuel de marque provisoire**
-      (logo JDS sur fond sable, 1600×900) mis en place le temps de recevoir les vraies
-      photos. Ils sont nets et à la charte — ils remplacent d'anciennes photos floues.
+      en 1600×900, dessiné à la charte, le temps de recevoir les vraies photos :
+      bicolore crème/bordeaux évoquant le coffret pour l'un, vases rayés pour l'autre.
+      Ils sont nets et distincts — ils remplacent d'anciennes photos floues.
 
       Pour les remplacer : déposer les vraies photos en **paysage ~1600×900**,
       compressées sous 300 Ko, **en gardant exactement le même nom de fichier**.
