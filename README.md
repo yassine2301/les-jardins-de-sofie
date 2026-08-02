@@ -443,6 +443,10 @@ les-jardins-de-sofie/
 ### 🔴 Bloquant pour vendre
 
 - [ ] **Connexion Shopify** — sans elle, **aucune vente n'est possible**. C'est la priorité n°1.
+- [ ] **Pages légales absentes** — CGV, mentions légales et politique de confidentialité
+      sont **obligatoires** pour vendre en ligne. Aucune n'existe aujourd'hui.
+- [ ] **Nom de domaine** — le site tourne sur `les-jardins-de-sofie.vercel.app`.
+      Il faut y brancher `lesjardinsdesofie.com`.
 - [ ] **Frais de livraison réels** — à paramétrer dans Shopify (actuellement juste affichés en texte)
 - [ ] **Code promo BIENVENUE10** — à créer dans Shopify, sinon il ne réduit rien
 
@@ -454,6 +458,7 @@ les-jardins-de-sofie/
       reste à brancher un service d'envoi
 - [ ] **Comptes clients** — la page affiche une confirmation, mais aucun compte n'est enregistré
       *(Shopify gère les comptes clients nativement une fois connecté)*
+- [ ] **Newsletter** — le champ email de la page d'accueil n'est relié à aucun outil
 
 ### 🟡 Contenu à fournir
 
