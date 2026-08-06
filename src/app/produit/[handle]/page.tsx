@@ -10,8 +10,9 @@ export async function generateStaticParams() {
   return products.map((p) => ({ handle: p.handle }));
 }
 
-export default async function ProductPage({ params }: { params: { handle: string } }) {
-  const product = await getProductByHandle(params.handle);
+export default async function ProductPage({ params }: { params: Promise<{ handle: string }> }) {
+  const { handle } = await params;
+  const product = await getProductByHandle(handle);
   if (!product) notFound();
 
   return <ProductDetail product={product} />;

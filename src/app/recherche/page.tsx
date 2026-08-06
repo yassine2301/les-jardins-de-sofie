@@ -11,9 +11,10 @@ export const metadata = {
 export default async function RecherchePage({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 }) {
-  const query = (searchParams.q || '').trim();
+  const { q: rawQuery } = await searchParams;
+  const query = (rawQuery || '').trim();
   const products = await getAllProducts(100);
 
   const normalize = (s: string) =>

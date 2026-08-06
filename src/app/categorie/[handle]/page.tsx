@@ -9,15 +9,16 @@ export async function generateStaticParams() {
   return collections.map((c) => ({ handle: c.handle }));
 }
 
-export default async function CategoryPage({ params }: { params: { handle: string } }) {
+export default async function CategoryPage({ params }: { params: Promise<{ handle: string }> }) {
+  const { handle } = await params;
   const collections = await getAllCollections();
-  const collection = collections.find((c) => c.handle === params.handle);
-  const products = await getProductsByCollection(params.handle, 50);
+  const collection = collections.find((c) => c.handle === handle);
+  const products = await getProductsByCollection(handle, 50);
 
   return (
     <section className={styles.section}>
       <div className={styles.header}>
-        <h1 className="section-title">{collection?.title || params.handle}</h1>
+        <h1 className="section-title">{collection?.title || handle}</h1>
       </div>
       <div className={styles.grid}>
         {products.map((product) => (
