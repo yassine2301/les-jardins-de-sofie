@@ -8,16 +8,14 @@ const code = ts.transpileModule(fs.readFileSync('src/lib/shopify.ts', 'utf8'), {
 }).outputText;
 function load(env = {}, fetch = async () => { throw new Error('offline'); }) {
   const exports = {};
-  vm.runInNewContext(code, { exports, process: { env }, fetch, console,
-    require: () => ({ demoProducts: [{ handle: 'demo' }], demoCollections: [] }),
-  });
+  vm.runInNewContext(code, { exports, process: { env }, fetch, console });
   return exports;
 }
 const configured = { NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN: 'example.myshopify.com', NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN: 'test-token' };
-test('Only an entirely unconfigured storefront uses demo products', async () => {
-  assert.equal((await load().getAllProducts())[0].handle, 'demo');
+test('An unconfigured storefront fails instead of returning demo products', async () => {
+  await assert.rejects(load().getAllProducts(), /pas configuré/);
   await assert.rejects(load(configured).getAllProducts(), /offline/);
-  await assert.rejects(load({ NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN: 'example.myshopify.com' }).getAllProducts(), /not configured/);
+  await assert.rejects(load({ NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN: 'example.myshopify.com' }).getAllProducts(), /pas configuré/);
 });
 test('Shopify business errors and missing carts reject instead of pretending success', async () => {
   const api = load(configured, async () => ({ ok: true, json: async () => ({ data: {
