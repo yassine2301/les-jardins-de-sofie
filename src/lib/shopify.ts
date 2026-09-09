@@ -7,10 +7,11 @@ import { demoProducts, demoCollections } from './demo-data';
 
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
 const storefrontToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN || '';
-const endpoint = `https://${domain}/api/2024-01/graphql.json`;
+const endpoint = `https://${domain}/api/2026-07/graphql.json`;
 
 // Check if Shopify is configured
-const isShopifyConfigured = domain.length > 5 && storefrontToken.length > 5;
+export const isShopifyConfigured = domain.length > 5 && storefrontToken.length > 5;
+const isDemoMode = !domain && !storefrontToken;
 
 // ---- GraphQL Fetch ----
 async function shopifyFetch<T>({ query, variables }: { query: string; variables?: Record<string, unknown> }): Promise<T> {
@@ -99,6 +100,7 @@ export interface ShopifyCollection {
 export interface ShopifyCart {
   id: string;
   checkoutUrl: string;
+  warnings?: string[];
   totalQuantity: number;
   cost: {
     totalAmount: ShopifyPrice;
@@ -138,7 +140,7 @@ const PRODUCT_FRAGMENT = `
       maxVariantPrice { amount currencyCode }
     }
     images(first: 10) { edges { node { url altText width height } } }
-    variants(first: 10) {
+    variants(first: 250) {
       edges { node {
         id title availableForSale
         price { amount currencyCode }
@@ -157,7 +159,8 @@ export async function getAllProducts(first = 50): Promise<ShopifyProduct[]> {
       variables: { first },
     });
     return data.products.edges.map((e) => e.node);
-  } catch {
+  } catch (error) {
+    if (!isDemoMode) throw error;
     console.log('⚡ Mode DEMO — Shopify non connecté');
     return demoProducts;
   }
@@ -170,7 +173,8 @@ export async function getProductByHandle(handle: string): Promise<ShopifyProduct
       variables: { handle },
     });
     return data.product;
-  } catch {
+  } catch (error) {
+    if (!isDemoMode) throw error;
     return demoProducts.find((p) => p.handle === handle) || null;
   }
 }
@@ -182,7 +186,8 @@ export async function getProductsByCollection(handle: string, first = 20): Promi
       variables: { handle, first },
     });
     return data.collection?.products.edges.map((e) => e.node) ?? [];
-  } catch {
+  } catch (error) {
+    if (!isDemoMode) throw error;
     const col = demoCollections.find((c) => c.handle === handle);
     return col?.products.edges.map((e) => e.node) ?? [];
   }
@@ -195,9 +200,37 @@ export async function getAllCollections(): Promise<ShopifyCollection[]> {
       query: `${PRODUCT_FRAGMENT} query{collections(first:20){edges{node{id handle title description image{url altText width height} products(first:8){edges{node{...ProductFields}}}}}}}`,
     });
     return data.collections.edges.map((e) => e.node);
-  } catch {
+  } catch (error) {
+    if (!isDemoMode) throw error;
     return demoCollections;
   }
+}
+
+const CART_FRAGMENT = `
+  fragment CartFields on Cart {
+    id checkoutUrl totalQuantity
+    cost { totalAmount { amount currencyCode } subtotalAmount { amount currencyCode } }
+    lines(first: 250) { edges { node {
+      id quantity
+      merchandise { ... on ProductVariant {
+        id title price { amount currencyCode }
+        image { url altText width height }
+        product { title handle images(first: 1) { edges { node { url altText width height } } } }
+      } }
+    } } }
+  }
+`;
+
+type CartResult = {
+  cart: ShopifyCart | null;
+  userErrors: Array<{ message: string }>;
+  warnings: Array<{ message: string }>;
+};
+
+function checkedCart(result: CartResult): ShopifyCart {
+  if (result.userErrors.length) throw new Error(result.userErrors.map(e => e.message).join(' '));
+  if (!result.cart) throw new Error('Le panier est indisponible. Veuillez réessayer.');
+  return { ...result.cart, warnings: result.warnings.map(w => w.message) };
 }
 
 // ---- Cart ----
@@ -211,18 +244,21 @@ let demoCart: ShopifyCart = {
 };
 
 export async function createCart(): Promise<ShopifyCart> {
-  if (!isShopifyConfigured) {
+  if (isDemoMode) {
     return demoCart;
   }
 
-  const data = await shopifyFetch<{ cartCreate: { cart: ShopifyCart } }>({
-    query: `mutation{cartCreate{cart{id checkoutUrl totalQuantity cost{totalAmount{amount currencyCode}subtotalAmount{amount currencyCode}}lines(first:50){edges{node{id quantity merchandise{...on ProductVariant{id title product{title handle images(first:1){edges{node{url altText width height}}}}price{amount currencyCode}image{url altText width height}}}}}}}}}`,
+  const data = await shopifyFetch<{ cartCreate: CartResult }>({
+    query: `${CART_FRAGMENT} mutation{cartCreate{cart{...CartFields}userErrors{message}warnings{message}}}`,
   });
-  return data.cartCreate.cart;
+  return checkedCart(data.cartCreate);
 }
 
 export async function addToCart(cartId: string, variantId: string, quantity = 1): Promise<ShopifyCart> {
-  if (!isShopifyConfigured) {
+  if (!variantId || !Number.isInteger(quantity) || quantity < 1) {
+    throw new Error('Choisissez un article et une quantité valide.');
+  }
+  if (isDemoMode) {
     // Simuler l'ajout au panier en mode démo
     const product = demoProducts.find(p => p.variants.edges[0]?.node.id === variantId);
     if (product) {
@@ -252,15 +288,15 @@ export async function addToCart(cartId: string, variantId: string, quantity = 1)
     return { ...demoCart };
   }
 
-  const data = await shopifyFetch<{ cartLinesAdd: { cart: ShopifyCart } }>({
-    query: `mutation($cartId:ID!,$lines:[CartLineInput!]!){cartLinesAdd(cartId:$cartId,lines:$lines){cart{id checkoutUrl totalQuantity cost{totalAmount{amount currencyCode}subtotalAmount{amount currencyCode}}lines(first:50){edges{node{id quantity merchandise{...on ProductVariant{id title product{title handle images(first:1){edges{node{url altText width height}}}}price{amount currencyCode}image{url altText width height}}}}}}}}}`,
+  const data = await shopifyFetch<{ cartLinesAdd: CartResult }>({
+    query: `${CART_FRAGMENT} mutation($cartId:ID!,$lines:[CartLineInput!]!){cartLinesAdd(cartId:$cartId,lines:$lines){cart{...CartFields}userErrors{message}warnings{message}}}`,
     variables: { cartId, lines: [{ merchandiseId: variantId, quantity }] },
   });
-  return data.cartLinesAdd.cart;
+  return checkedCart(data.cartLinesAdd);
 }
 
 export async function removeFromCart(cartId: string, lineId: string): Promise<ShopifyCart> {
-  if (!isShopifyConfigured) {
+  if (isDemoMode) {
     demoCart.lines.edges = demoCart.lines.edges.filter(e => e.node.id !== lineId);
     demoCart.totalQuantity = demoCart.lines.edges.reduce((sum, e) => sum + e.node.quantity, 0);
     const total = demoCart.lines.edges.reduce((sum, e) => sum + parseFloat(e.node.merchandise.price.amount) * e.node.quantity, 0);
@@ -269,17 +305,17 @@ export async function removeFromCart(cartId: string, lineId: string): Promise<Sh
     return { ...demoCart };
   }
 
-  const data = await shopifyFetch<{ cartLinesRemove: { cart: ShopifyCart } }>({
-    query: `mutation($cartId:ID!,$lineIds:[ID!]!){cartLinesRemove(cartId:$cartId,lineIds:$lineIds){cart{id checkoutUrl totalQuantity cost{totalAmount{amount currencyCode}subtotalAmount{amount currencyCode}}lines(first:50){edges{node{id quantity merchandise{...on ProductVariant{id title product{title handle images(first:1){edges{node{url altText width height}}}}price{amount currencyCode}image{url altText width height}}}}}}}}}`,
+  const data = await shopifyFetch<{ cartLinesRemove: CartResult }>({
+    query: `${CART_FRAGMENT} mutation($cartId:ID!,$lineIds:[ID!]!){cartLinesRemove(cartId:$cartId,lineIds:$lineIds){cart{...CartFields}userErrors{message}warnings{message}}}`,
     variables: { cartId, lineIds: [lineId] },
   });
-  return data.cartLinesRemove.cart;
+  return checkedCart(data.cartLinesRemove);
 }
 
 // ---- Helpers ----
 export function formatPrice(price: ShopifyPrice): string {
   const amount = parseFloat(price.amount);
-  return `${amount.toLocaleString('fr-FR')} MAD`;
+  return `${amount.toLocaleString('fr-FR')} ${price.currencyCode}`;
 }
 
 export function getProductImages(product: ShopifyProduct): ShopifyImage[] {
@@ -287,7 +323,7 @@ export function getProductImages(product: ShopifyProduct): ShopifyImage[] {
 }
 
 export function getFirstVariantId(product: ShopifyProduct): string {
-  return product.variants.edges[0]?.node.id ?? '';
+  return product.variants.edges.find(e => e.node.availableForSale)?.node.id ?? '';
 }
 
 export function hasDiscount(product: ShopifyProduct): boolean {

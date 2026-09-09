@@ -1,12 +1,13 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useRef, ReactNode } from 'react';
 import { createCart, addToCart, removeFromCart, type ShopifyCart } from '@/lib/shopify';
 
 interface CartContext {
   cart: ShopifyCart | null;
   isOpen: boolean;
   isLoading: boolean;
+  error: string | null;
   openCart: () => void;
   closeCart: () => void;
   addItem: (variantId: string, quantity?: number) => Promise<void>;
@@ -21,42 +22,41 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Initialise le panier
-  useEffect(() => {
-    const initCart = async () => {
-      try {
-        const newCart = await createCart();
-        setCart(newCart);
-      } catch (err) {
-        console.error('Erreur création panier:', err);
-      }
-    };
-    initCart();
-  }, []);
+  const [error, setError] = useState<string | null>(null);
+  const busy = useRef(false);
 
   const addItem = useCallback(async (variantId: string, quantity = 1) => {
-    if (!cart) return;
+    if (busy.current) return;
+    busy.current = true;
     setIsLoading(true);
+    setError(null);
+    setIsOpen(true);
     try {
-      const updatedCart = await addToCart(cart.id, variantId, quantity);
+      const currentCart = cart ?? await createCart();
+      setCart(currentCart);
+      const updatedCart = await addToCart(currentCart.id, variantId, quantity);
       setCart(updatedCart);
       setIsOpen(true); // Ouvre le panier après ajout
     } catch (err) {
-      console.error('Erreur ajout au panier:', err);
+      setError(err instanceof Error ? err.message : 'Impossible d’ajouter cet article. Veuillez réessayer.');
     } finally {
+      busy.current = false;
       setIsLoading(false);
     }
   }, [cart]);
 
   const removeItem = useCallback(async (lineId: string) => {
-    if (!cart) return;
+    if (!cart || busy.current) return;
+    busy.current = true;
     setIsLoading(true);
+    setError(null);
     try {
       const updatedCart = await removeFromCart(cart.id, lineId);
       setCart(updatedCart);
     } catch (err) {
-      console.error('Erreur suppression:', err);
+      setError(err instanceof Error ? err.message : 'Impossible de retirer cet article. Veuillez réessayer.');
     } finally {
+      busy.current = false;
       setIsLoading(false);
     }
   }, [cart]);
@@ -66,6 +66,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       cart,
       isOpen,
       isLoading,
+      error,
       openCart: () => setIsOpen(true),
       closeCart: () => setIsOpen(false),
       addItem,
