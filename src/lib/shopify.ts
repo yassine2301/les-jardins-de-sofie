@@ -1,21 +1,19 @@
 // ==============================================
 // Les Jardins de Sofie — Shopify Storefront API
-// Tombe en mode DEMO si Shopify n'est pas configuré
+// Catalogue, panier et paiement alimentés uniquement par Shopify
 // ==============================================
-
-import { demoProducts, demoCollections } from './demo-data';
 
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || '';
 const storefrontToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN || '';
-const endpoint = `https://${domain}/api/2024-01/graphql.json`;
+const endpoint = `https://${domain}/api/2026-07/graphql.json`;
 
 // Check if Shopify is configured
-const isShopifyConfigured = domain.length > 5 && storefrontToken.length > 5;
+export const isShopifyConfigured = domain.length > 5 && storefrontToken.length > 5;
 
 // ---- GraphQL Fetch ----
 async function shopifyFetch<T>({ query, variables }: { query: string; variables?: Record<string, unknown> }): Promise<T> {
   if (!isShopifyConfigured) {
-    throw new Error('Shopify not configured — using demo data');
+    throw new Error('Shopify n’est pas configuré. Vérifiez les variables d’environnement.');
   }
 
   const res = await fetch(endpoint, {
@@ -99,6 +97,7 @@ export interface ShopifyCollection {
 export interface ShopifyCart {
   id: string;
   checkoutUrl: string;
+  warnings?: string[];
   totalQuantity: number;
   cost: {
     totalAmount: ShopifyPrice;
@@ -138,7 +137,7 @@ const PRODUCT_FRAGMENT = `
       maxVariantPrice { amount currencyCode }
     }
     images(first: 10) { edges { node { url altText width height } } }
-    variants(first: 10) {
+    variants(first: 250) {
       edges { node {
         id title availableForSale
         price { amount currencyCode }
@@ -150,136 +149,96 @@ const PRODUCT_FRAGMENT = `
 `;
 
 // ---- Queries: Products ----
-export async function getAllProducts(first = 50): Promise<ShopifyProduct[]> {
-  try {
-    const data = await shopifyFetch<{ products: { edges: Array<{ node: ShopifyProduct }> } }>({
-      query: `${PRODUCT_FRAGMENT} query($first:Int!){products(first:$first,sortKey:BEST_SELLING){edges{node{...ProductFields}}}}`,
-      variables: { first },
-    });
-    return data.products.edges.map((e) => e.node);
-  } catch {
-    console.log('⚡ Mode DEMO — Shopify non connecté');
-    return demoProducts;
-  }
+export async function getAllProducts(first = 250): Promise<ShopifyProduct[]> {
+  const data = await shopifyFetch<{ products: { edges: Array<{ node: ShopifyProduct }> } }>({
+    query: `${PRODUCT_FRAGMENT} query($first:Int!){products(first:$first,sortKey:BEST_SELLING){edges{node{...ProductFields}}}}`,
+    variables: { first },
+  });
+  return data.products.edges.map((e) => e.node);
 }
 
 export async function getProductByHandle(handle: string): Promise<ShopifyProduct | null> {
-  try {
-    const data = await shopifyFetch<{ product: ShopifyProduct | null }>({
-      query: `${PRODUCT_FRAGMENT} query($handle:String!){product(handle:$handle){...ProductFields}}`,
-      variables: { handle },
-    });
-    return data.product;
-  } catch {
-    return demoProducts.find((p) => p.handle === handle) || null;
-  }
+  const data = await shopifyFetch<{ product: ShopifyProduct | null }>({
+    query: `${PRODUCT_FRAGMENT} query($handle:String!){product(handle:$handle){...ProductFields}}`,
+    variables: { handle },
+  });
+  return data.product;
 }
 
-export async function getProductsByCollection(handle: string, first = 20): Promise<ShopifyProduct[]> {
-  try {
-    const data = await shopifyFetch<{ collection: { products: { edges: Array<{ node: ShopifyProduct }> } } | null }>({
-      query: `${PRODUCT_FRAGMENT} query($handle:String!,$first:Int!){collection(handle:$handle){products(first:$first,sortKey:BEST_SELLING){edges{node{...ProductFields}}}}}`,
-      variables: { handle, first },
-    });
-    return data.collection?.products.edges.map((e) => e.node) ?? [];
-  } catch {
-    const col = demoCollections.find((c) => c.handle === handle);
-    return col?.products.edges.map((e) => e.node) ?? [];
-  }
+export async function getProductsByCollection(handle: string, first = 250): Promise<ShopifyProduct[]> {
+  const data = await shopifyFetch<{ collection: { products: { edges: Array<{ node: ShopifyProduct }> } } | null }>({
+    query: `${PRODUCT_FRAGMENT} query($handle:String!,$first:Int!){collection(handle:$handle){products(first:$first,sortKey:BEST_SELLING){edges{node{...ProductFields}}}}}`,
+    variables: { handle, first },
+  });
+  return data.collection?.products.edges.map((e) => e.node) ?? [];
 }
 
 // ---- Queries: Collections ----
 export async function getAllCollections(): Promise<ShopifyCollection[]> {
-  try {
-    const data = await shopifyFetch<{ collections: { edges: Array<{ node: ShopifyCollection }> } }>({
-      query: `${PRODUCT_FRAGMENT} query{collections(first:20){edges{node{id handle title description image{url altText width height} products(first:8){edges{node{...ProductFields}}}}}}}`,
-    });
-    return data.collections.edges.map((e) => e.node);
-  } catch {
-    return demoCollections;
+  const data = await shopifyFetch<{ collections: { edges: Array<{ node: ShopifyCollection }> } }>({
+    query: `${PRODUCT_FRAGMENT} query{collections(first:20){edges{node{id handle title description image{url altText width height} products(first:8){edges{node{...ProductFields}}}}}}}`,
+  });
+  return data.collections.edges.map((e) => e.node);
+}
+
+const CART_FRAGMENT = `
+  fragment CartFields on Cart {
+    id checkoutUrl totalQuantity
+    cost { totalAmount { amount currencyCode } subtotalAmount { amount currencyCode } }
+    lines(first: 250) { edges { node {
+      id quantity
+      merchandise { ... on ProductVariant {
+        id title price { amount currencyCode }
+        image { url altText width height }
+        product { title handle images(first: 1) { edges { node { url altText width height } } } }
+      } }
+    } } }
   }
+`;
+
+type CartResult = {
+  cart: ShopifyCart | null;
+  userErrors: Array<{ message: string }>;
+  warnings: Array<{ message: string }>;
+};
+
+function checkedCart(result: CartResult): ShopifyCart {
+  if (result.userErrors.length) throw new Error(result.userErrors.map(e => e.message).join(' '));
+  if (!result.cart) throw new Error('Le panier est indisponible. Veuillez réessayer.');
+  return { ...result.cart, warnings: result.warnings.map(w => w.message) };
 }
 
 // ---- Cart ----
-// En mode démo, le panier fonctionne localement sans Shopify
-let demoCart: ShopifyCart = {
-  id: 'demo-cart',
-  checkoutUrl: '#',
-  totalQuantity: 0,
-  cost: { totalAmount: { amount: '0', currencyCode: 'MAD' }, subtotalAmount: { amount: '0', currencyCode: 'MAD' } },
-  lines: { edges: [] },
-};
-
 export async function createCart(): Promise<ShopifyCart> {
-  if (!isShopifyConfigured) {
-    return demoCart;
-  }
-
-  const data = await shopifyFetch<{ cartCreate: { cart: ShopifyCart } }>({
-    query: `mutation{cartCreate{cart{id checkoutUrl totalQuantity cost{totalAmount{amount currencyCode}subtotalAmount{amount currencyCode}}lines(first:50){edges{node{id quantity merchandise{...on ProductVariant{id title product{title handle images(first:1){edges{node{url altText width height}}}}price{amount currencyCode}image{url altText width height}}}}}}}}}`,
+  const data = await shopifyFetch<{ cartCreate: CartResult }>({
+    query: `${CART_FRAGMENT} mutation{cartCreate{cart{...CartFields}userErrors{message}warnings{message}}}`,
   });
-  return data.cartCreate.cart;
+  return checkedCart(data.cartCreate);
 }
 
 export async function addToCart(cartId: string, variantId: string, quantity = 1): Promise<ShopifyCart> {
-  if (!isShopifyConfigured) {
-    // Simuler l'ajout au panier en mode démo
-    const product = demoProducts.find(p => p.variants.edges[0]?.node.id === variantId);
-    if (product) {
-      const existing = demoCart.lines.edges.find(e => e.node.merchandise.id === variantId);
-      if (existing) {
-        existing.node.quantity += quantity;
-      } else {
-        demoCart.lines.edges.push({
-          node: {
-            id: `line-${Date.now()}`,
-            quantity,
-            merchandise: {
-              id: variantId,
-              title: 'Default Title',
-              product: { title: product.title, handle: product.handle, images: product.images },
-              price: product.priceRange.minVariantPrice,
-              image: product.images.edges[0]?.node || null,
-            },
-          },
-        });
-      }
-      demoCart.totalQuantity = demoCart.lines.edges.reduce((sum, e) => sum + e.node.quantity, 0);
-      const total = demoCart.lines.edges.reduce((sum, e) => sum + parseFloat(e.node.merchandise.price.amount) * e.node.quantity, 0);
-      demoCart.cost.totalAmount.amount = String(total);
-      demoCart.cost.subtotalAmount.amount = String(total);
-    }
-    return { ...demoCart };
+  if (!variantId || !Number.isInteger(quantity) || quantity < 1) {
+    throw new Error('Choisissez un article et une quantité valide.');
   }
-
-  const data = await shopifyFetch<{ cartLinesAdd: { cart: ShopifyCart } }>({
-    query: `mutation($cartId:ID!,$lines:[CartLineInput!]!){cartLinesAdd(cartId:$cartId,lines:$lines){cart{id checkoutUrl totalQuantity cost{totalAmount{amount currencyCode}subtotalAmount{amount currencyCode}}lines(first:50){edges{node{id quantity merchandise{...on ProductVariant{id title product{title handle images(first:1){edges{node{url altText width height}}}}price{amount currencyCode}image{url altText width height}}}}}}}}}`,
+  const data = await shopifyFetch<{ cartLinesAdd: CartResult }>({
+    query: `${CART_FRAGMENT} mutation($cartId:ID!,$lines:[CartLineInput!]!){cartLinesAdd(cartId:$cartId,lines:$lines){cart{...CartFields}userErrors{message}warnings{message}}}`,
     variables: { cartId, lines: [{ merchandiseId: variantId, quantity }] },
   });
-  return data.cartLinesAdd.cart;
+  return checkedCart(data.cartLinesAdd);
 }
 
 export async function removeFromCart(cartId: string, lineId: string): Promise<ShopifyCart> {
-  if (!isShopifyConfigured) {
-    demoCart.lines.edges = demoCart.lines.edges.filter(e => e.node.id !== lineId);
-    demoCart.totalQuantity = demoCart.lines.edges.reduce((sum, e) => sum + e.node.quantity, 0);
-    const total = demoCart.lines.edges.reduce((sum, e) => sum + parseFloat(e.node.merchandise.price.amount) * e.node.quantity, 0);
-    demoCart.cost.totalAmount.amount = String(total);
-    demoCart.cost.subtotalAmount.amount = String(total);
-    return { ...demoCart };
-  }
-
-  const data = await shopifyFetch<{ cartLinesRemove: { cart: ShopifyCart } }>({
-    query: `mutation($cartId:ID!,$lineIds:[ID!]!){cartLinesRemove(cartId:$cartId,lineIds:$lineIds){cart{id checkoutUrl totalQuantity cost{totalAmount{amount currencyCode}subtotalAmount{amount currencyCode}}lines(first:50){edges{node{id quantity merchandise{...on ProductVariant{id title product{title handle images(first:1){edges{node{url altText width height}}}}price{amount currencyCode}image{url altText width height}}}}}}}}}`,
+  const data = await shopifyFetch<{ cartLinesRemove: CartResult }>({
+    query: `${CART_FRAGMENT} mutation($cartId:ID!,$lineIds:[ID!]!){cartLinesRemove(cartId:$cartId,lineIds:$lineIds){cart{...CartFields}userErrors{message}warnings{message}}}`,
     variables: { cartId, lineIds: [lineId] },
   });
-  return data.cartLinesRemove.cart;
+  return checkedCart(data.cartLinesRemove);
 }
 
 // ---- Helpers ----
 export function formatPrice(price: ShopifyPrice): string {
   const amount = parseFloat(price.amount);
-  return `${amount.toLocaleString('fr-FR')} MAD`;
+  return `${amount.toLocaleString('fr-FR')} ${price.currencyCode}`;
 }
 
 export function getProductImages(product: ShopifyProduct): ShopifyImage[] {
@@ -287,7 +246,7 @@ export function getProductImages(product: ShopifyProduct): ShopifyImage[] {
 }
 
 export function getFirstVariantId(product: ShopifyProduct): string {
-  return product.variants.edges[0]?.node.id ?? '';
+  return product.variants.edges.find(e => e.node.availableForSale)?.node.id ?? '';
 }
 
 export function hasDiscount(product: ShopifyProduct): boolean {

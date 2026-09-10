@@ -3,11 +3,11 @@
 import Image from 'next/image';
 import { X, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
-import { formatPrice } from '@/lib/shopify';
+import { formatPrice, isShopifyConfigured } from '@/lib/shopify';
 import styles from './CartDrawer.module.css';
 
 export function CartDrawer() {
-  const { cart, isOpen, closeCart, removeItem, isLoading } = useCart();
+  const { cart, isOpen, closeCart, removeItem, isLoading, error } = useCart();
   const lines = cart?.lines.edges.map((e) => e.node) ?? [];
 
   return (
@@ -31,6 +31,8 @@ export function CartDrawer() {
         </div>
 
         <div className={styles.body}>
+          {error && <p role="alert">{error}</p>}
+          {cart?.warnings?.map((warning, index) => <p role="status" key={index}>{warning}</p>)}
           {lines.length === 0 ? (
             <div className={styles.empty}>
               <p>Votre panier est vide</p>
@@ -76,9 +78,13 @@ export function CartDrawer() {
               <span>Total</span>
               <strong>{formatPrice(cart.cost.totalAmount)}</strong>
             </div>
-            <a href={cart.checkoutUrl} className={styles.checkout}>
-              Procéder au paiement
-            </a>
+            {isShopifyConfigured && cart.checkoutUrl.startsWith('https://') && !isLoading && !error ? (
+              <a href={cart.checkoutUrl} className={styles.checkout}>Procéder au paiement</a>
+            ) : (
+              <button disabled className={styles.checkout}>
+                {isShopifyConfigured ? 'Paiement momentanément indisponible' : 'Commandes bientôt disponibles'}
+              </button>
+            )}
             <p className={styles.note}>Livraison : Rabat 100 MAD · Casablanca 150 MAD</p>
           </div>
         )}

@@ -9,8 +9,6 @@ import {
   formatPrice,
   getProductImages,
   getFirstVariantId,
-  hasDiscount,
-  getDiscountPercent,
 } from '@/lib/shopify';
 import styles from './ProductDetail.module.css';
 
@@ -21,15 +19,18 @@ export function ProductDetail({ product }: Props) {
   const images = getProductImages(product);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const variantId = getFirstVariantId(product);
-  const discount = hasDiscount(product);
-  const discountPct = getDiscountPercent(product);
+  const [variantId, setVariantId] = useState(getFirstVariantId(product));
+  const variant = product.variants.edges.find(e => e.node.id === variantId)?.node;
+  const canBuy = Boolean(variant?.availableForSale);
+
+  const currentPrice = Number(variant?.price.amount ?? 0);
+  const comparePrice = Number(variant?.compareAtPrice?.amount ?? 0);
+  const discount = comparePrice > currentPrice && currentPrice > 0;
+  const discountPct = discount ? Math.round((1 - currentPrice / comparePrice) * 100) : 0;
 
   const handleAdd = async () => {
-    if (variantId && product.availableForSale) {
-      for (let i = 0; i < quantity; i++) {
-        await addItem(variantId);
-      }
+    if (variantId && canBuy) {
+      await addItem(variantId, quantity);
     }
   };
 
@@ -73,17 +74,30 @@ export function ProductDetail({ product }: Props) {
           <h1 className={styles.title}>{product.title}</h1>
           <div className={styles.priceRow}>
             <span className={styles.price}>
-              {formatPrice(product.priceRange.minVariantPrice)}
+              {formatPrice(variant?.price ?? product.priceRange.minVariantPrice)}
             </span>
             {discount && (
               <span className={styles.oldPrice}>
-                {formatPrice(product.compareAtPriceRange.minVariantPrice)}
+                {formatPrice(variant!.compareAtPrice!)}
               </span>
             )}
           </div>
 
           <div className={styles.desc} dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
 
+          {product.variants.edges.length > 1 && (
+            <label>
+              Choisir une option
+              <select value={variantId} onChange={e => setVariantId(e.target.value)} disabled={isLoading}>
+                {!variantId && <option value="">Indisponible</option>}
+                {product.variants.edges.map(({ node }) => (
+                  <option key={node.id} value={node.id} disabled={!node.availableForSale}>
+                    {node.title} — {formatPrice(node.price)}{node.availableForSale ? '' : ' — Épuisé'}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           <div className={styles.actions}>
             <div className={styles.qty}>
               <button onClick={() => setQuantity(Math.max(1, quantity - 1))}><Minus size={14} /></button>
@@ -93,9 +107,9 @@ export function ProductDetail({ product }: Props) {
             <button
               className={styles.addBtn}
               onClick={handleAdd}
-              disabled={!product.availableForSale || isLoading}
+              disabled={!canBuy || isLoading}
             >
-              {!product.availableForSale ? 'Épuisé' : isLoading ? 'Ajout en cours...' : 'Ajouter au panier'}
+              {!canBuy ? 'Épuisé' : isLoading ? 'Ajout en cours...' : 'Ajouter au panier'}
             </button>
             <button className={styles.wishBtn} aria-label="Favoris">
               <Heart size={18} strokeWidth={1.5} />
