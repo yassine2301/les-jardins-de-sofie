@@ -15,7 +15,7 @@ export default async function RecherchePage({
 }) {
   const { q: rawQuery } = await searchParams;
   const query = (rawQuery || '').trim();
-  const products = await getAllProducts(100);
+  const products = await getAllProducts();
 
   const normalize = (s: string) =>
     s
