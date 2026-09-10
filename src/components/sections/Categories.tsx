@@ -14,14 +14,17 @@ const fallbackCategories = [
 interface Props { collections: ShopifyCollection[]; }
 
 export function Categories({ collections }: Props) {
-  const cats = collections.length > 0
-    ? collections.slice(0, 4).map(c => ({
-        handle: c.handle,
-        title: c.title,
-        desc: c.description || '',
-        image: c.image?.url || null,
-      }))
-    : fallbackCategories.map(c => ({ ...c }));
+  const collectionsByHandle = new Map(collections.map(collection => [collection.handle, collection]));
+  const cats = fallbackCategories.map(fallback => {
+    const collection = collectionsByHandle.get(fallback.handle);
+
+    return {
+      handle: fallback.handle,
+      title: fallback.title,
+      desc: collection?.description || fallback.desc,
+      image: collection?.image?.url || fallback.image,
+    };
+  });
 
   return (
     <section className={styles.section}>
@@ -32,11 +35,7 @@ export function Categories({ collections }: Props) {
         {cats.map((cat) => (
           <Link key={cat.handle} href={`/categorie/${cat.handle}`} className={styles.card}>
             <div className={styles.imgWrap}>
-              {cat.image ? (
-                <Image src={cat.image} alt={cat.title} fill style={{ objectFit: 'cover' }} sizes="350px" />
-              ) : (
-                <div className={styles.placeholder} />
-              )}
+              <Image src={cat.image} alt={cat.title} fill style={{ objectFit: 'cover' }} sizes="350px" />
             </div>
             <div className={styles.overlay} />
             <div className={styles.info}>
