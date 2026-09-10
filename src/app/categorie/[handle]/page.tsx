@@ -13,7 +13,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ handl
   const { handle } = await params;
   const collections = await getAllCollections();
   const collection = collections.find((c) => c.handle === handle);
-  const products = await getProductsByCollection(handle, 50);
+  const products = await getProductsByCollection(handle);
 
   return (
     <section className={styles.section}>
