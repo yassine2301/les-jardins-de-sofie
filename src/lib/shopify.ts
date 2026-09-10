@@ -149,7 +149,7 @@ const PRODUCT_FRAGMENT = `
 `;
 
 // ---- Queries: Products ----
-export async function getAllProducts(first = 50): Promise<ShopifyProduct[]> {
+export async function getAllProducts(first = 250): Promise<ShopifyProduct[]> {
   const data = await shopifyFetch<{ products: { edges: Array<{ node: ShopifyProduct }> } }>({
     query: `${PRODUCT_FRAGMENT} query($first:Int!){products(first:$first,sortKey:BEST_SELLING){edges{node{...ProductFields}}}}`,
     variables: { first },
@@ -165,7 +165,7 @@ export async function getProductByHandle(handle: string): Promise<ShopifyProduct
   return data.product;
 }
 
-export async function getProductsByCollection(handle: string, first = 20): Promise<ShopifyProduct[]> {
+export async function getProductsByCollection(handle: string, first = 250): Promise<ShopifyProduct[]> {
   const data = await shopifyFetch<{ collection: { products: { edges: Array<{ node: ShopifyProduct }> } } | null }>({
     query: `${PRODUCT_FRAGMENT} query($handle:String!,$first:Int!){collection(handle:$handle){products(first:$first,sortKey:BEST_SELLING){edges{node{...ProductFields}}}}}`,
     variables: { handle, first },
