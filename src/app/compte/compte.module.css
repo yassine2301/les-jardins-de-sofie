@@ -96,6 +96,10 @@
 }
 
 .submit {
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
   width: 100%;
   padding: 1rem;
   background: var(--bordeaux);
