@@ -33,3 +33,25 @@ snapshot, not the full database/theme/media archive.
 
 The existing limitations described in README.md still apply, including the
 prototype forms and the Shopify development-store status.
+
+## Customer accounts — theme 1.1.0
+
+The prototype `/compte` form has been replaced with the store's real
+Shopify-hosted customer account entry point. The connected store already has
+`NEW_CUSTOMER_ACCOUNTS` enabled. Its root account URL was read from the Shopify
+Admin API, stored as a public WordPress setting, and verified in the browser.
+The sign-in screen opens in French and offers both sign-in and account creation.
+
+Shopify handles the email-code authentication, customer profiles, addresses and
+order history. This change adds no WordPress customer database, password form,
+OAuth callback handler or local customer-token storage. The unverified welcome
+discount and the prototype success message have been removed.
+
+Nine technical checks passed, including untrusted URL rejection and the prior
+catalogue regression checks. The theme update and account URL setting were
+published, and the button was clicked from the production `/compte` page through
+to Shopify's actual sign-in form. No real customer account was created during
+verification, and no email code, profile change or real order was submitted.
+
+Newsletter and service/contact forms remain prototypes. This account change
+does not alter the Shopify development-store plan or enable live orders.

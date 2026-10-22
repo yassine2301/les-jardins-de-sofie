@@ -40,6 +40,7 @@ const result = await build({
     'process.env.NODE_ENV': '"production"',
     'process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN': 'window.__JDS_CONFIG__.shopifyDomain',
     'process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN': 'window.__JDS_CONFIG__.storefrontToken',
+    'process.env.NEXT_PUBLIC_SHOPIFY_CUSTOMER_ACCOUNT_URL': 'window.__JDS_CONFIG__.customerAccountUrl',
   },
   plugins: [{
     name: 'wordpress-public-assets',

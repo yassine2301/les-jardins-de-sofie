@@ -25,8 +25,16 @@ as in the previous `NEXT_PUBLIC_` client configuration. Secrets are not bundled.
 - Frontend navigation remains client-side, preserving the current cart.
 - Unlike the Next.js site, this adapter renders catalogue pages in the browser;
   product-specific server-side SEO needs a separate enhancement if required.
-- Existing prototype account, newsletter and service/contact forms retain their
-  prior behavior. Their backend integrations are not implemented by this move.
+- Customer registration, login, profile, addresses and order history use the
+  Shopify-hosted customer account portal. Set its root URL in **Catalogue
+  Shopify JDS → Lien de l’espace client Shopify**, using the URL returned by
+  Shopify's customer account settings. The customer verifies an email code;
+  Shopify creates the customer record on first sign-in. WordPress holds no
+  customer password, account record or authentication token for this flow.
+- The account portal opens in French. The site does not claim that a customer
+  is logged into WordPress, and does not maintain a second customer database.
+- Existing prototype newsletter and service/contact forms retain their prior
+  behavior. Their backend integrations are not implemented by this move.
 - A Shopify development store is still only for testing; changing hosting does
   not turn it into a production store or enable real COD orders.
 - The old WordPress database and theme remain intact. Switching the theme back

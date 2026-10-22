@@ -2,6 +2,7 @@ export type JdsConfig = {
   assetsUrl: string;
   shopifyDomain: string;
   storefrontToken: string;
+  customerAccountUrl?: string;
 };
 
 declare global {

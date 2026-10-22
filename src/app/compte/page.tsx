@@ -1,97 +1,52 @@
 'use client';
 
-import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowUpRight, Mail, MapPin, Package, ShieldCheck } from 'lucide-react';
+import { getCustomerAccountUrl } from '@/lib/customer-account';
 import styles from './compte.module.css';
 
-type Mode = 'register' | 'login';
-
 export default function ComptePage() {
-  const [mode, setMode] = useState<Mode>('register');
-  const [submitted, setSubmitted] = useState(false);
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSubmitted(true);
-    // TODO: Connect to backend
-  }
-
-  if (submitted) {
-    return (
-      <section className={styles.section}>
-        <div className={styles.card}>
-          <div className={styles.success}>
-            <h2>Bienvenue chez Studio JDS !</h2>
-            <p>Votre compte a bien été créé. Profitez de <strong>-10% de réduction</strong> sur votre première commande avec le code :</p>
-            <p style={{ fontSize: '1.4rem', fontWeight: 600, color: 'var(--bordeaux)', margin: '1rem 0', letterSpacing: '0.1em' }}>BIENVENUE10</p>
-            <p>Vous pouvez maintenant explorer nos collections et passer commande.</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const accountUrl = getCustomerAccountUrl();
 
   return (
     <section className={styles.section}>
       <div className={styles.card}>
-        <h1 className={styles.heading}>
-          {mode === 'register' ? <>Créer un <em>compte</em></> : <>Se <em>connecter</em></>}
-        </h1>
+        <span className={styles.badge}><ShieldCheck size={14} aria-hidden="true" /> Espace client sécurisé</span>
+        <h1 className={styles.heading}>Votre <em>compte</em></h1>
         <p className={styles.desc}>
-          {mode === 'register'
-            ? 'Rejoignez Studio JDS pour suivre vos commandes et profitez de -10% sur votre première commande !'
-            : 'Connectez-vous à votre compte Studio JDS.'}
+          Retrouvez vos commandes et vos informations dans votre espace Les Jardins de Sofie.
         </p>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          {mode === 'register' && (
-            <>
-              <div className={styles.field}>
-                <label>Prénom <span className={styles.req}>*</span></label>
-                <input type="text" required placeholder="Votre prénom" />
-              </div>
-              <div className={styles.field}>
-                <label>Nom <span className={styles.req}>*</span></label>
-                <input type="text" required placeholder="Votre nom" />
-              </div>
-            </>
-          )}
-
-          <div className={styles.field}>
-            <label>Email <span className={styles.req}>*</span></label>
-            <input type="email" required placeholder="votre@email.com" />
+        <div className={styles.signInInfo}>
+          <Mail size={22} strokeWidth={1.5} aria-hidden="true" />
+          <div>
+            <h2>Une adresse e-mail suffit</h2>
+            <p>Recevez un code de connexion par e-mail. Aucun mot de passe à retenir.</p>
           </div>
+        </div>
 
-          {mode === 'register' && (
-            <div className={styles.field}>
-              <label>Téléphone</label>
-              <input type="tel" placeholder="+212 6XX XXX XXX" />
-            </div>
-          )}
+        {accountUrl ? (
+          <>
+            <a href={accountUrl} className={styles.submit} rel="nofollow" aria-describedby="account-first-visit">
+              Se connecter / Créer mon compte <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+            <p id="account-first-visit" className={styles.firstVisit}>
+              Première visite ? Votre compte est créé automatiquement après la validation du code.
+            </p>
+          </>
+        ) : (
+          <p role="alert" className={styles.unavailable}>
+            L’espace client est momentanément indisponible. <Link href="/contact">Contactez-nous</Link> pour être accompagné.
+          </p>
+        )}
 
-          <div className={styles.field}>
-            <label>Mot de passe <span className={styles.req}>*</span></label>
-            <input type="password" required placeholder="Minimum 6 caractères" minLength={6} />
-          </div>
+        <ul className={styles.features} aria-label="Dans votre espace client">
+          <li><Package size={18} strokeWidth={1.5} aria-hidden="true" /> Vos commandes et leur suivi</li>
+          <li><MapPin size={18} strokeWidth={1.5} aria-hidden="true" /> Vos coordonnées et adresses</li>
+        </ul>
 
-          {mode === 'register' && (
-            <div className={styles.field}>
-              <label>Ville</label>
-              <input type="text" placeholder="Ex: Casablanca, Rabat..." />
-            </div>
-          )}
-
-          <button type="submit" className={styles.submit}>
-            {mode === 'register' ? 'Créer mon compte' : 'Se connecter'}
-          </button>
-        </form>
-
-        <p className={styles.toggle}>
-          {mode === 'register' ? (
-            <>Déjà un compte ? <button onClick={() => setMode('login')}>Se connecter</button></>
-          ) : (
-            <>Pas encore de compte ? <button onClick={() => setMode('register')}>Créer un compte</button></>
-          )}
-        </p>
+        <p className={styles.note}>La connexion et vos données clients sont gérées par Shopify.</p>
+        <p className={styles.help}>Besoin d’aide ? <Link href="/contact">Nous contacter</Link></p>
       </div>
     </section>
   );

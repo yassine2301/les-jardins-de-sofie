@@ -14,6 +14,20 @@ function jds_studio_public_token($value) {
     return preg_match('/^[a-zA-Z0-9_-]{16,256}$/', $value) ? $value : '';
 }
 
+function jds_studio_customer_account_url($value) {
+    $value = trim((string) $value);
+    if ($value === '') return '';
+    $url = wp_parse_url($value);
+    if (!$url || ($url['scheme'] ?? '') !== 'https' || isset($url['user']) || isset($url['pass'])
+        || isset($url['port']) || isset($url['query']) || isset($url['fragment'])) return '';
+    $host = strtolower($url['host'] ?? '');
+    $path = $url['path'] ?? '';
+    $domain = jds_studio_shopify_domain(get_option('jds_shopify_domain', ''));
+    $hosted_account = $host === 'shopify.com' && preg_match('~^/\d+/account/?$~', $path);
+    $store_account = $domain !== '' && $host === $domain && preg_match('~^/account(?:/login)?/?$~', $path);
+    return $hosted_account || $store_account ? esc_url_raw($value) : '';
+}
+
 add_action('customize_register', function ($customizer) {
     $customizer->add_section('jds_catalogue', array(
         'title' => 'Catalogue Shopify JDS',
@@ -36,6 +50,15 @@ add_action('customize_register', function ($customizer) {
         'section' => 'jds_catalogue', 'label' => 'Jeton Storefront public', 'type' => 'password',
         'description' => 'Ce jeton est conçu pour être utilisé par le navigateur des visiteurs.',
         'input_attrs' => array('autocomplete' => 'off'),
+    ));
+    $customizer->add_setting('jds_shopify_customer_account_url', array(
+        'type' => 'option', 'capability' => 'manage_options',
+        'sanitize_callback' => 'jds_studio_customer_account_url', 'transport' => 'refresh',
+    ));
+    $customizer->add_control('jds_shopify_customer_account_url', array(
+        'section' => 'jds_catalogue', 'label' => 'Lien de l’espace client Shopify', 'type' => 'url',
+        'description' => 'Adresse principale des comptes clients fournie par Shopify. Les clients, leurs adresses et leurs commandes restent dans Shopify.',
+        'input_attrs' => array('placeholder' => 'https://shopify.com/identifiant/account'),
     ));
 });
 

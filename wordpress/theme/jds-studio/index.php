@@ -5,6 +5,7 @@ $jds_config = array(
     'assetsUrl' => esc_url_raw($jds_assets),
     'shopifyDomain' => jds_studio_shopify_domain(get_option('jds_shopify_domain', '')),
     'storefrontToken' => jds_studio_public_token(get_option('jds_storefront_token', '')),
+    'customerAccountUrl' => jds_studio_customer_account_url(get_option('jds_shopify_customer_account_url', '')),
 );
 $jds_version = (string) wp_get_theme()->get('Version');
 ?><!doctype html>
