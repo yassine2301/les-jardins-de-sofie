@@ -15,6 +15,8 @@ L'ancien thème JDS (`alukas`), ses réglages et son contenu restent sur
 l'hébergement WordPress. Pour rétablir l'ancien rendu, réactiver le thème JDS
 dans Apparence → Thèmes. Le nouveau thème ne supprime pas ces données.
 
-Une exportation complète All-in-One WP Migration a également été lancée sur
-l'hébergement. Son résultat doit être vérifié dans la section Sauvegardes ;
-elle n'est pas contenue dans ce dossier public.
+Une sauvegarde complète All-in-One WP Migration de **2,23 Go** a été créée et
+sa présence vérifiée le 22 octobre 2026 dans WordPress → All-in-One WP
+Migration → Sauvegardes. Cette archive reste sur l'hébergement ; elle n'est pas
+contenue dans ce dépôt public, car elle comprend la base de données et les
+données privées du site. Aucun test de restauration complète n'a été effectué.
