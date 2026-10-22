@@ -1,0 +1,5 @@
+node_modules/
+generated/
+theme/jds-studio/dist/
+*.zip
+build-report.json

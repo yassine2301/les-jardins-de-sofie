@@ -1,0 +1,7 @@
+.jds-notice { max-width: 1200px; margin: 3rem auto; padding: 1.5rem; text-align: center; color: var(--chocolate); }
+.jds-notice button { text-decoration: underline; color: var(--bordeaux); font: inherit; }
+.jds-not-found { min-height: 50vh; padding: 8rem 2rem; text-align: center; }
+body.customize-support #wpadminbar { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
