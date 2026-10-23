@@ -7,7 +7,7 @@ the WordPress PHP host. No WooCommerce or Node.js server is needed in production
 
 ## Build
 
-From this directory, run `npm ci`, `npm run build`, and `npm test`. Zip the
+From this directory, run `npm ci`, `npm run build`, `npm run typecheck`, and `npm test`. Zip the
 `theme/jds-studio` directory and upload it through Appearance → Themes → Add.
 Do not activate an unconfigured theme. Use Live Preview and configure the two
 options under **Catalogue Shopify JDS**. Verify the preview, then publish.
@@ -25,14 +25,26 @@ as in the previous `NEXT_PUBLIC_` client configuration. Secrets are not bundled.
 - Frontend navigation remains client-side, preserving the current cart.
 - Unlike the Next.js site, this adapter renders catalogue pages in the browser;
   product-specific server-side SEO needs a separate enhancement if required.
-- Customer registration, login, profile, addresses and order history use the
-  Shopify-hosted customer account portal. Set its root URL in **Catalogue
-  Shopify JDS → Lien de l’espace client Shopify**, using the URL returned by
-  Shopify's customer account settings. The customer verifies an email code;
-  Shopify creates the customer record on first sign-in. WordPress holds no
-  customer password, account record or authentication token for this flow.
-- The account portal opens in French. The site does not claim that a customer
-  is logged into WordPress, and does not maintain a second customer database.
+- Theme 1.2.2 uses the native WordPress user database for customer sign-in.
+  `/compte` has separate login and registration forms. Registration sends a
+  personal password-setup link, proving address ownership before login. Password
+  hashing, reset keys, revocation and authentication cookies are delegated to
+  WordPress. The optional persistent cookie uses WordPress's default 14-day
+  duration. No passwords or customer authentication tokens enter localStorage.
+- Anonymous forms use a browser-specific nonce, secure HttpOnly cookie,
+  same-origin POST checks and rate limits. New accounts can only be subscribers;
+  staff must use their existing admin login. Customer profiles are loaded from
+  a private, uncached same-origin endpoint and never embedded in cached HTML.
+- WordPress identity is separate from Shopify checkout identity. Products,
+  prices, availability, carts, checkout, order records and order notifications
+  remain Shopify responsibilities. This does not provision Shopify customer
+  credentials or mirror Shopify order history into WordPress. Order tracking
+  remains available from Shopify's order-confirmation emails.
+- The previous public Shopify account URL option remains for compatibility but
+  is no longer used by the WordPress account page. The existing Next.js/Vercel
+  account page is not deployed by this WordPress release.
+- Shopify cart IDs are persisted in browser storage and revalidated against
+  Shopify after a reload, so a normal account-form redirect preserves the cart.
 - Existing prototype newsletter and service/contact forms retain their prior
   behavior. Their backend integrations are not implemented by this move.
 - A Shopify development store is still only for testing; changing hosting does

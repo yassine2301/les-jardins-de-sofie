@@ -25,7 +25,7 @@ async function loadTypeScript(path, context = {}) {
 
 test('PHP templates parse successfully', async () => {
   const parser = new PhpParser.Engine({ parser: { suppressErrors: false, version: '8.2' } });
-  for (const name of ['index.php', 'functions.php']) {
+  for (const name of ['index.php', 'functions.php', 'inc/customer-auth.php']) {
     const ast = parser.parseCode(await readFile(resolve(theme, name), 'utf8'), name);
     assert.ok(ast.children.length > 0);
   }

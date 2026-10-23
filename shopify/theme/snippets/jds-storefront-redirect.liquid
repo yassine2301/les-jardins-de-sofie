@@ -1,0 +1,22 @@
+{% doc %}
+  Returns visitors from the Shopify theme to the matching custom storefront page.
+  Keeps the theme editor available and leaves checkout routes unchanged.
+{% enddoc %}
+{%- unless request.design_mode -%}
+  {%- assign jds_path = '' -%}
+  {%- case request.page_type -%}
+    {%- when 'index', 'cart', 'list-collections' -%}
+      {%- assign jds_path = '/' -%}
+    {%- when 'product' -%}
+      {%- assign jds_path = '/produit/' | append: product.handle -%}
+    {%- when 'collection' -%}
+      {%- assign jds_path = '/categorie/' | append: collection.handle -%}
+    {%- when 'search' -%}
+      {%- assign jds_term = search.terms | url_encode -%}
+      {%- assign jds_path = '/recherche?q=' | append: jds_term -%}
+  {%- endcase -%}
+  {%- if jds_path != '' -%}
+    {%- assign jds_destination = 'https://lesjardinsdesofie.com' | append: jds_path -%}
+    <script>window.location.replace({{ jds_destination | json }});</script>
+  {%- endif -%}
+{%- endunless -%}

@@ -1,6 +1,7 @@
 <?php
 /** WordPress host adapter for the existing JDS React storefront. */
 defined('ABSPATH') || exit;
+require_once __DIR__ . '/inc/customer-auth.php';
 
 function jds_studio_shopify_domain($value) {
     $value = strtolower(trim((string) $value));

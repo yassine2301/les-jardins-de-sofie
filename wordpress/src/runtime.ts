@@ -3,6 +3,8 @@ export type JdsConfig = {
   shopifyDomain: string;
   storefrontToken: string;
   customerAccountUrl?: string;
+  customerStateUrl?: string;
+  customerActionUrl?: string;
 };
 
 declare global {

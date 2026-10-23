@@ -15,7 +15,7 @@ import { ProductCard } from '@/components/product/ProductCard';
 import { ProductDetail } from '@/components/product/ProductDetail';
 import HistoryPage from '@/app/notre-histoire/page';
 import ContactPage from '@/app/contact/page';
-import AccountPage from '@/app/compte/page';
+import AccountPage from './account';
 import ServicesPage from '@/app/services/page';
 import CorporatePage from '@/app/services/corporate/page';
 import EventsPage from '@/app/services/evenements/page';

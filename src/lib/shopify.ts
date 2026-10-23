@@ -209,6 +209,14 @@ function checkedCart(result: CartResult): ShopifyCart {
 }
 
 // ---- Cart ----
+export async function getCart(cartId: string): Promise<ShopifyCart | null> {
+  const data = await shopifyFetch<{ cart: ShopifyCart | null }>({
+    query: `${CART_FRAGMENT} query($id:ID!){cart(id:$id){...CartFields}}`,
+    variables: { id: cartId },
+  });
+  return data.cart;
+}
+
 export async function createCart(): Promise<ShopifyCart> {
   const data = await shopifyFetch<{ cartCreate: CartResult }>({
     query: `${CART_FRAGMENT} mutation{cartCreate{cart{...CartFields}userErrors{message}warnings{message}}}`,

@@ -6,6 +6,8 @@ $jds_config = array(
     'shopifyDomain' => jds_studio_shopify_domain(get_option('jds_shopify_domain', '')),
     'storefrontToken' => jds_studio_public_token(get_option('jds_storefront_token', '')),
     'customerAccountUrl' => jds_studio_customer_account_url(get_option('jds_shopify_customer_account_url', '')),
+    'customerStateUrl' => admin_url('admin-ajax.php?action=jds_customer_state'),
+    'customerActionUrl' => admin_url('admin-post.php'),
 );
 $jds_version = (string) wp_get_theme()->get('Version');
 ?><!doctype html>

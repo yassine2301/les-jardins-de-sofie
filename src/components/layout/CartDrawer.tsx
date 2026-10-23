@@ -79,7 +79,7 @@ export function CartDrawer() {
               <strong>{formatPrice(cart.cost.totalAmount)}</strong>
             </div>
             {isShopifyConfigured && cart.checkoutUrl.startsWith('https://') && !isLoading && !error ? (
-              <a href={cart.checkoutUrl} className={styles.checkout}>Procéder au paiement</a>
+              <a href={cart.checkoutUrl} className={styles.checkout}>Finaliser ma commande</a>
             ) : (
               <button disabled className={styles.checkout}>
                 {isShopifyConfigured ? 'Paiement momentanément indisponible' : 'Commandes bientôt disponibles'}
