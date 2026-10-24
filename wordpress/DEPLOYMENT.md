@@ -1,4 +1,48 @@
-# WordPress production deployment — 22 October 2026
+# WordPress deployment history
+
+## Current status — rollback on 24 October 2026
+
+At the owner's request, the original JDS theme (`alukas`) is active again on
+https://lesjardinsdesofie.com/. The WordPress theme administration confirmed
+"Nouveau thème activé" and "Activé : JDS". The public homepage matches the
+layout captured before migration. Studio JDS 1.2.2 remains installed but is
+inactive; its account handlers and storefront routing are no longer loaded.
+
+The old theme, original pages, product catalogue and settings were still on
+the host. Reactivation was sufficient: no full database import or deletion
+was needed. The original 22 October All-in-One WP Migration archive remains
+present, 2.23 GB. The JavaScript storefront source is retained in this
+repository. No new hosting migration, domain change or Shopify theme
+publication is part of this rollback.
+
+The post-rollback full export completed successfully. The backups screen lists
+`lesjardinsdesofie.com-20261024-140605-814.wpress`, 2.22 GB, alongside the
+original `lesjardinsdesofie.com-20261022-195500-473.wpress`, 2.23 GB. Both
+archives remain on the WordPress host; neither is copied to the public source
+repository. The presence and completed export were verified, not a separate
+full-archive restoration test.
+
+Public browser checks covered the homepage, Boutique, Anthurium product page,
+Petites Plantes, Grand Pots, About and Contact. Categories show distinct
+products. Adding one Anthurium at 300 MAD increased the existing cart from one
+to two items and the total from 1,850 to 2,150 MAD; the test item was removed
+and the original cart was preserved. The remaining pre-existing Erratum noir
+& Ficus Lyrata is out of stock, and the native cart correctly reports that
+checkout is blocked. Stock was not changed. No order, payment, customer
+registration, password change or contact email was submitted.
+
+Verification limits: transient 503 responses and a timeout occurred during
+the full export. Contact subsequently loaded normally in the browser. Guest
+HTTP checks after export confirmed the old theme and no React app root on
+the homepage, shop, product, Grand Pots, About and Contact pages. Responses
+were still slow (roughly 6–10 seconds); an anonymous Petites Plantes request
+timed out despite that category rendering in the browser. Hosting reliability
+and real order/email delivery are therefore not certified by this rollback.
+A focused retry of that category then returned HTTP 200 with the old theme
+in 5.45 seconds. All seven checked public routes have returned HTTP 200 after
+the rollback; this is a point-in-time check, not a guarantee of availability.
+
+## Historical deployment — 22 October 2026
 
 The Studio JDS theme is active on https://lesjardinsdesofie.com/.
 WordPress Customizer confirmed publication, and the new homepage was checked

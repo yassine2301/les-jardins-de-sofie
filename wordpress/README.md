@@ -1,5 +1,11 @@
 # Studio JDS: WordPress deployment
 
+**Live status — 24 October 2026:** at the owner's request, the original JDS
+(`alukas`) theme has been reactivated on lesjardinsdesofie.com. This React/
+Shopify adapter is installed but inactive. Its source is retained for later
+work; no migration to another hosting platform is in progress. See
+`DEPLOYMENT.md` for rollback checks and backup status.
+
 This is a WordPress host adapter for the existing Next.js storefront, not an
 iframe or reverse proxy to Vercel. It bundles the original React components,
 CSS modules, category rules and Shopify client into browser assets served by
