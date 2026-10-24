@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-24",
+  "site": "https://lesjardinsdesofie.com/",
+  "issue": "Flash of unstyled homepage before the active WordPress theme CSS loads",
+  "before": {
+    "status": 200,
+    "response_start_seconds_including_connection": 7.0,
+    "total_seconds": 7.69,
+    "html_bytes": 496488,
+    "regular_stylesheet_links": 0,
+    "airlift_critical_css_identifier": "https://lesjardinsdesofie.com/wp-content/themes/jds-studio/dist/jds-app.css?v=1.2.2",
+    "active_theme_styles_delayed": true
+  },
+  "changes": {
+    "airlift_active": false,
+    "litespeed_cache_active": false,
+    "speed_optimizer_file_cache": true,
+    "speed_optimizer_automatic_purge": true
+  },
+  "after": [
+    {
+      "attempt": 1,
+      "status": 200,
+      "ttfb_seconds": 8.69,
+      "total_seconds": 9.23,
+      "html_bytes": 341539,
+      "stylesheet_links": 28,
+      "theme_css_in_head": true,
+      "airlift_delayed_css": false,
+      "stale_new_theme_css": false,
+      "litespeed_marker": false
+    },
+    {
+      "attempt": 2,
+      "status": 200,
+      "ttfb_seconds": 6.43,
+      "total_seconds": 6.93,
+      "html_bytes": 341540,
+      "stylesheet_links": 28,
+      "theme_css_in_head": true,
+      "airlift_delayed_css": false,
+      "stale_new_theme_css": false,
+      "litespeed_marker": false
+    }
+  ],
+  "browser_checks": [
+    "Header logo rendered at 170 x 165 pixels",
+    "Cart sidebar opens and closes with the existing item retained",
+    "Homepage and shop navigation works"
+  ],
+  "limits": [
+    "HTTP timings include connection and proxy overhead; origin processing was not isolated",
+    "A material improvement in response time is not established",
+    "No real order or email delivery was tested"
+  ]
+}

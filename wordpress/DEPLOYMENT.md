@@ -42,6 +42,37 @@ A focused retry of that category then returned HTTP 200 with the old theme
 in 5.45 seconds. All seven checked public routes have returned HTTP 200 after
 the rollback; this is a point-in-time check, not a guarantee of availability.
 
+## Startup flash correction — 24 October 2026
+
+The owner reported an oversized, unstyled logo before the homepage layout
+appeared. A fresh anonymous HTML response reproduced the cause: AirLift had
+inlined critical CSS for the inactive `jds-studio/dist/jds-app.css?v=1.2.2`
+while delaying all of the active Alukas theme's stylesheets and inline CSS.
+The document initially had no regular stylesheet links. This was stale
+optimization of the previous theme, not a separate landing page.
+
+AirLift was deactivated through WordPress; its files and settings remain
+available for rollback. LiteSpeed Cache was also deactivated after its own
+Cache screen reported that page caching was unavailable on this server
+without LiteSpeed or QUIC.cloud. Speed Optimizer remains active, with its
+existing file-based cache enabled. Automatic Purge was changed from off to
+on and its persisted checked state was verified after a fresh navigation.
+Manual cache purge was invoked. Logged-in caching and preheating were not
+enabled. No theme source, product, customer or order data was changed.
+
+Final anonymous checks returned HTTP 200 twice, with 28 regular stylesheet
+links, the Alukas base stylesheet in the head, no delayed AirLift CSS loader,
+no reference to the inactive theme CSS, and no LiteSpeed output marker. HTML
+was approximately 342 KB instead of 496 KB. Browser checks confirmed the
+normal 170 x 165 header logo, working cart sidebar open/close and navigation
+between the homepage and shop. The existing cart contents were retained.
+
+This resolves the identified unstyled startup rendering path. It does not
+establish a general speed improvement: final HTTP response-start waits were
+8.69 and 6.43 seconds, including network/proxy overhead. Server processing
+was not isolated. See `diagnostics/loading-20261024.json`. Further hosting
+performance work may still be needed; no new hosting migration was started.
+
 ## Historical deployment — 22 October 2026
 
 The Studio JDS theme is active on https://lesjardinsdesofie.com/.
